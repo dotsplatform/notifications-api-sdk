@@ -5,7 +5,7 @@
  * @author    Oleksandr Polosmak <o.polosmak@dotsplatform.com>
  */
 
-namespace Dotsplatform\Notifications\Clients;
+namespace Dotsplatform\Notifications;
 
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
