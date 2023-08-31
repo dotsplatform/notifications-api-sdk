@@ -25,6 +25,8 @@ interface NotificationsClient
 
     public function findAppToken(string $account, string $id): ?AppToken;
 
+    public function findAccount(string $id): ?NotificationsAccount;
+
     public function storeAccount(NotificationsAccount $account): void;
 
     public function sendUserPush(StoreUserPushNotificationDTO $dto): void;

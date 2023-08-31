@@ -2,6 +2,8 @@
 
 namespace Dotsplatform\Notifications;
 
+use Dotsplatform\Notifications\Clients\NotificationsClient;
+use Dotsplatform\Notifications\Clients\NotificationsHttpClient;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -13,6 +15,7 @@ class NotificationsApiServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(NotificationsClient::class, NotificationsHttpClient::class);
         $this->mergeConfigFrom(
             __DIR__ . '/../config/notifications-api-sdk.php',
             'notifications-server'

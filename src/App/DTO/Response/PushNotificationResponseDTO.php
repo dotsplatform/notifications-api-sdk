@@ -11,6 +11,9 @@ use Dots\Data\DTO;
 
 class PushNotificationResponseDTO extends DTO
 {
+    public const READ_YES = 1;
+    public const READ_NO = 0;
+
     protected string $id;
     protected string $title;
     protected string $text;

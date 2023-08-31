@@ -32,6 +32,16 @@ class AppToken extends Entity
     protected string $lang;
     protected ?string $notificationToken;
 
+    public function getAppVersion(): ?string
+    {
+        return $this->deviceData['appVersion'] ?? null;
+    }
+
+    public function getApiVersion(): ?string
+    {
+        return $this->deviceData['apiVersion'] ?? null;
+    }
+
     public function isAppAndroid(): bool
     {
         return $this->getType() === self::TYPE_APP_ANDROID;
@@ -45,6 +55,11 @@ class AppToken extends Entity
     public function isAppCourierBusiness(): bool
     {
         return $this->getType() === self::TYPE_APP_BUSINESS_COURIER;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->getStatus() === self::STATUS_ACTIVE;
     }
 
     public function getId(): string

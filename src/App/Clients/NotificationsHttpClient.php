@@ -23,6 +23,7 @@ use RuntimeException;
 
 class NotificationsHttpClient implements NotificationsClient
 {
+    private const FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
     private const STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
     private const ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns';
     private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns';
@@ -72,6 +73,23 @@ class NotificationsHttpClient implements NotificationsClient
         }
 
         return AppToken::fromArray($data);
+    }
+
+    public function findAccount(string $id): ?NotificationsAccount
+    {
+        $url = sprintf(self::FIND_ACCOUNT_URL_TEMPLATE, $id);
+        try {
+            $data = $this->decodeResponse(
+                $this->makeClient()->get($url),
+            );
+            if (empty($data)) {
+                return null;
+            }
+        } catch (GuzzleException) {
+            return null;
+        }
+
+        return NotificationsAccount::fromArray($data);
     }
 
     public function storeAccount(NotificationsAccount $account): void
