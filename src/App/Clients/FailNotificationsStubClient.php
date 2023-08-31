@@ -5,7 +5,7 @@
  * @author    Oleksandr Polosmak <o.polosmak@dotsplatform.com>
  */
 
-namespace Dotsplatform\Notifications;
+namespace Dotsplatform\Notifications\Clients;
 
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
@@ -17,6 +17,7 @@ use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\NotificationsCampaign;
 use Dotsplatform\Notifications\Entities\NotificationsCampaigns;
+use Dotsplatform\Notifications\NotificationsClient;
 use RuntimeException;
 
 class FailNotificationsStubClient implements NotificationsClient
@@ -31,7 +32,7 @@ class FailNotificationsStubClient implements NotificationsClient
         // TODO: Implement updateAppToken() method.
     }
 
-    public function findAppToken(string $account, string $id): ?AppToken
+    public function findAppToken(string $id): ?AppToken
     {
         return null;
     }

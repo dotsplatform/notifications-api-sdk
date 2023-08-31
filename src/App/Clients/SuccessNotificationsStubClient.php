@@ -5,7 +5,7 @@
  * @author    Oleksandr Polosmak <o.polosmak@dotsplatform.com>
  */
 
-namespace Dotsplatform\Notifications;
+namespace Dotsplatform\Notifications\Clients;
 
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
@@ -18,6 +18,7 @@ use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\NotificationsCampaign;
 use Dotsplatform\Notifications\Entities\NotificationsCampaigns;
+use Dotsplatform\Notifications\NotificationsClient;
 use Illuminate\Support\Str;
 
 class SuccessNotificationsStubClient implements NotificationsClient
@@ -34,11 +35,11 @@ class SuccessNotificationsStubClient implements NotificationsClient
         // TODO: Implement updateAppToken() method.
     }
 
-    public function findAppToken(string $account, string $id): ?AppToken
+    public function findAppToken(string $id): ?AppToken
     {
         return AppToken::fromArray([
             'id' => $id,
-            'accountId' => $account,
+            'accountId' => Str::uuid()->toString(),
             'deviceToken' => Str::uuid()->toString(),
             'deviceData' => [],
             'userId' => Str::uuid()->toString(),

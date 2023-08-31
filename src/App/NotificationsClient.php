@@ -23,7 +23,7 @@ interface NotificationsClient
 
     public function updateAppToken(string $id, AppTokenFormDTO $dto): void;
 
-    public function findAppToken(string $account, string $id): ?AppToken;
+    public function findAppToken(string $id): ?AppToken;
 
     public function findAccount(string $id): ?NotificationsAccount;
 

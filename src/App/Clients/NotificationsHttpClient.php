@@ -16,6 +16,7 @@ use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\NotificationsCampaign;
 use Dotsplatform\Notifications\Entities\NotificationsCampaigns;
+use Dotsplatform\Notifications\NotificationsClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
@@ -33,7 +34,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/count';
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
-    private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
+    private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
     private const UPDATE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
 
     public function storeAppToken(AppTokenFormDTO $dto): AppToken
@@ -58,9 +59,9 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function findAppToken(string $account, string $id): ?AppToken
+    public function findAppToken(string $id): ?AppToken
     {
-        $url = sprintf(self::SHOW_APP_TOKEN_URL_TEMPLATE, $account, $id);
+        $url = sprintf(self::SHOW_APP_TOKEN_URL_TEMPLATE, $id);
         try {
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),
