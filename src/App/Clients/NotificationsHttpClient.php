@@ -12,6 +12,7 @@ use Dotsplatform\Notifications\DTO\GetAppTokenPushNotificationsDTO;
 use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\StoreUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\NotificationsCampaign;
@@ -30,7 +31,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns';
     private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns/%s';
     private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns/%s';
-    private const STORE_USER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s';
+    private const STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
     private const GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/count';
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
@@ -101,11 +102,11 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function sendUserPush(StoreUserPushNotificationDTO $dto): void
+    public function sendUserPush(string $account, StoreUserPushNotificationsList $list,): void
     {
-        $url = sprintf(self::STORE_USER_PUSH_NOTIFICATION_URL_TEMPLATE, $dto->getAccountId(), $dto->getUserId());
+        $url = sprintf(self::STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE, $account);
         try {
-            $this->makeClient()->post($url, $dto->toArray());
+            $this->makeClient()->post($url, ['items' => $list->toArray()]);
         } catch (GuzzleException) {
         }
     }

@@ -12,7 +12,7 @@ use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\GetAppTokenPushNotificationsDTO;
 use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
-use Dotsplatform\Notifications\DTO\StoreUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\NotificationsCampaign;
@@ -47,11 +47,6 @@ class FailNotificationsStubClient implements NotificationsClient
         // TODO: Implement storeAccount() method.
     }
 
-    public function sendUserPush(StoreUserPushNotificationDTO $dto): void
-    {
-        // TODO: Implement sendUserPush() method.
-    }
-
     public function getAppTokenPushNotifications(GetAppTokenPushNotificationsDTO $dto): PushNotificationsResponseList
     {
         return PushNotificationsResponseList::empty();
@@ -83,5 +78,10 @@ class FailNotificationsStubClient implements NotificationsClient
     public function findNotificationCampaign(string $accountId, string $id): ?NotificationsCampaign
     {
         return null;
+    }
+
+    public function sendUserPush(string $account, StoreUserPushNotificationsList $list): void
+    {
+        // TODO: Implement sendUserPush() method.
     }
 }
