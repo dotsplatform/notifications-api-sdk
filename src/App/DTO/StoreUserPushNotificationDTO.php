@@ -12,12 +12,23 @@ use MA\App\Utils\DTO\NotificationsLinkDTO;
 
 class StoreUserPushNotificationDTO extends DTO
 {
-    public const SOUND_DEFAULT = 'default';
-    public const LIVE_TIME_SECONDS_DEFAULT = 1200;
-    public const NOTIFICATION_TYPE_PUSH = 'push';
-
     public const NOTIFICATION_TYPE_MESSAGE = 'message';
     public const NOTIFICATION_TYPE_DATA = 'data';
+
+    public const SHOW_MESSAGE_NOTIFICATION_IN_ACTIVE_APP_YES = 1;
+    public const SHOW_MESSAGE_NOTIFICATION_IN_ACTIVE_APP_NO = 0;
+    
+    public const ACTION_TYPE_SERVICE = 'service';
+    public const ACTION_TYPE_INFO = 'info';
+    public const ACTION_TYPE_PROMO = 'promo';
+
+    public const ACTION_REFRESH_USER_ORDERS = 'refresh-user-orders';
+    public const ACTION_SHOW_SCREEN = 'show-screen';
+
+    public const LIVE_TIME_SECONDS_DEFAULT = 1200; // 1 hour
+
+    public const SOUND_DEFAULT = 'default';
+    public const SOUND_BUSINESS_APP = 'ring3x';
 
     protected string $accountId;
     protected string $userId;
