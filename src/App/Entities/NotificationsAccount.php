@@ -35,4 +35,9 @@ class NotificationsAccount extends Entity
     {
         return $this->data;
     }
+
+    public function getPushProviderConnection(): ?string
+    {
+        return $this->getData()['pushProviderConnection'] ?? null;
+    }
 }

@@ -17,7 +17,7 @@ class AppTokenFormDTO extends DTO
     protected int $status;
     protected ?string $deviceToken;
     protected array $deviceData;
-    protected string $lang;
+    protected ?string $lang;
     protected ?string $notificationToken;
 
     public function getAccountId(): string
@@ -50,7 +50,7 @@ class AppTokenFormDTO extends DTO
         return $this->deviceData;
     }
 
-    public function getLang(): string
+    public function getLang(): ?string
     {
         return $this->lang;
     }

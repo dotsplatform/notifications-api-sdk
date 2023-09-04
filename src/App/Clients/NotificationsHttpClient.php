@@ -40,9 +40,10 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function storeAppToken(AppTokenFormDTO $dto): AppToken
     {
+        $url = sprintf(self::STORE_APP_TOKEN_URL_TEMPLATE, $dto->getAccountId());
         try {
             $data = $this->decodeResponse(
-                $this->makeClient()->post(self::STORE_APP_TOKEN_URL_TEMPLATE, ['json' => $dto->toArray()]),
+                $this->makeClient()->post($url, ['json' => $dto->toArray()]),
             );
         } catch (GuzzleException) {
             $data = [];
@@ -131,7 +132,7 @@ class NotificationsHttpClient implements NotificationsClient
     public function getAppTokenPushNotifications(GetAppTokenPushNotificationsDTO $dto): PushNotificationsResponseList
     {
         $url = sprintf(
-            self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
+            self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE,
             $dto->getAccount(),
             $dto->getAppToken(),
         );
@@ -148,7 +149,7 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function getAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
     {
-        $url = sprintf(self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE, $dto->getAccount(), $dto->getAppToken());
+        $url = sprintf(self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE, $dto->getAccount(), $dto->getAppToken());
         try {
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url, $dto->toArray()),
@@ -222,7 +223,7 @@ class NotificationsHttpClient implements NotificationsClient
     {
         return new GuzzleClient(
             [
-                'base_uri' => config('resources.notifications.external.host'),
+                'base_uri' => config('notifications-api-sdk.notifications-server.host'),
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',

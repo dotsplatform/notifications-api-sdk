@@ -31,6 +31,7 @@ class StoreUserPushNotificationDTO extends DTO
 
     protected string $accountId;
     protected string $userId;
+    protected ?string $orderId;
     protected string $notificationType;
     protected string $title;
     protected string $message;
@@ -100,5 +101,10 @@ class StoreUserPushNotificationDTO extends DTO
     public function getLinkData(): NotificationsLinkDTO
     {
         return $this->linkData;
+    }
+
+    public function getOrderId(): ?string
+    {
+        return $this->orderId;
     }
 }
