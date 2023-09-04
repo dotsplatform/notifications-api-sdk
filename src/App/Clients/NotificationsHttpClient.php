@@ -36,6 +36,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
     private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
+    private const SHOW_USER_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/users/%s';
     private const UPDATE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
 
     public function storeAppToken(AppTokenFormDTO $dto): AppToken
@@ -63,6 +64,23 @@ class NotificationsHttpClient implements NotificationsClient
     public function findAppToken(string $id): ?AppToken
     {
         $url = sprintf(self::SHOW_APP_TOKEN_URL_TEMPLATE, $id);
+        try {
+            $data = $this->decodeResponse(
+                $this->makeClient()->get($url),
+            );
+            if (empty($data)) {
+                return null;
+            }
+        } catch (GuzzleException) {
+            return null;
+        }
+
+        return AppToken::fromArray($data);
+    }
+
+    public function findUserAppToken(string $userId): ?AppToken
+    {
+        $url = sprintf(self::SHOW_USER_APP_TOKEN_URL_TEMPLATE, $userId);
         try {
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),

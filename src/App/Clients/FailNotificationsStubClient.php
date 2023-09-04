@@ -84,4 +84,9 @@ class FailNotificationsStubClient implements NotificationsClient
     {
         // TODO: Implement sendUserPush() method.
     }
+
+    public function findUserAppToken(string $userId): ?AppToken
+    {
+        return null;
+    }
 }

@@ -11,7 +11,6 @@ use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\GetAppTokenPushNotificationsDTO;
 use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
-use Dotsplatform\Notifications\DTO\StoreUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
@@ -25,6 +24,8 @@ interface NotificationsClient
     public function updateAppToken(string $id, AppTokenFormDTO $dto): void;
 
     public function findAppToken(string $id): ?AppToken;
+
+    public function findUserAppToken(string $userId): ?AppToken;
 
     public function findAccount(string $id): ?NotificationsAccount;
 
