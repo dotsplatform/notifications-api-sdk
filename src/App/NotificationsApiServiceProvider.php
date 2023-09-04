@@ -2,7 +2,6 @@
 
 namespace Dotsplatform\Notifications;
 
-use Dotsplatform\Notifications\Clients\NotificationsClient;
 use Dotsplatform\Notifications\Clients\NotificationsHttpClient;
 use Illuminate\Support\ServiceProvider;
 

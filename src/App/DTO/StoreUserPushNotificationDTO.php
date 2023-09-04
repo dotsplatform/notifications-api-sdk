@@ -8,7 +8,6 @@
 namespace Dotsplatform\Notifications\DTO;
 
 use Dots\Data\DTO;
-use MA\App\Utils\DTO\NotificationsLinkDTO;
 
 class StoreUserPushNotificationDTO extends DTO
 {

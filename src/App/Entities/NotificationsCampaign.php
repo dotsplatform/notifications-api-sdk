@@ -8,8 +8,8 @@
 namespace Dotsplatform\Notifications\Entities;
 
 use Dots\Data\Entity;
+use Dotsplatform\Notifications\DTO\NotificationsLinkDTO;
 use Dotsplatform\Notifications\DTO\NotificationType;
-use MA\App\Utils\DTO\NotificationsLinkDTO;
 
 class NotificationsCampaign extends Entity
 {
