@@ -29,7 +29,7 @@ class AppToken extends Entity
     protected int $status;
     protected ?string $deviceToken;
     protected array $deviceData;
-    protected string $lang;
+    protected ?string $lang;
     protected ?string $notificationToken;
 
     public function getAppVersion(): ?string
@@ -97,7 +97,7 @@ class AppToken extends Entity
         return $this->deviceData;
     }
 
-    public function getLang(): string
+    public function getLang(): ?string
     {
         return $this->lang;
     }
