@@ -138,7 +138,7 @@ class NotificationsHttpClient implements NotificationsClient
         );
         try {
             $data = $this->decodeResponse(
-                $this->makeClient()->get($url, $dto->toArray()),
+                $this->makeClient()->get($url, ['json' => $dto->toArray()]),
             );
         } catch (GuzzleException) {
             $data = [];
@@ -149,10 +149,13 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function getAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
     {
-        $url = sprintf(self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE, $dto->getAccount(), $dto->getAppToken());
+        $url = sprintf(self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
+            $dto->getAccount(),
+            $dto->getAppToken(),
+        );
         try {
             $data = $this->decodeResponse(
-                $this->makeClient()->get($url, $dto->toArray()),
+                $this->makeClient()->get($url, ['json' => $dto->toArray()]),
             );
             if (empty($data)) {
                 return 0;
@@ -172,8 +175,10 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE, $account);
         try {
             $data = $this->decodeResponse($this->makeClient()->get($url, [
-                'limit' => $limit,
-                'offset' => $offset,
+                'json' => [
+                    'limit' => $limit,
+                    'offset' => $offset,
+                ]
             ]));
         } catch (GuzzleException) {
             $data = [];
