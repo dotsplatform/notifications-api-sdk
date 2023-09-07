@@ -30,7 +30,7 @@ class StoreUserPushNotificationDTO extends DTO
     public const SOUND_BUSINESS_APP = 'ring3x';
 
     protected string $accountId;
-    protected string $userId;
+    protected array $userIds;
     protected ?string $orderId;
     protected string $notificationType;
     protected string $title;
@@ -53,9 +53,9 @@ class StoreUserPushNotificationDTO extends DTO
         return $this->accountId;
     }
 
-    public function getUserId(): string
+    public function getUserIds(): array
     {
-        return $this->userId;
+        return $this->userIds;
     }
 
     public function getNotificationType(): string
