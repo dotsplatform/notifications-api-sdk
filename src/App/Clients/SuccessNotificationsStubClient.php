@@ -82,7 +82,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         ]);
     }
 
-    public function getAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
+    public function getUnreadAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
     {
         return 1;
     }
