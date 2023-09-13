@@ -31,6 +31,7 @@ class StoreUserPushNotificationDTO extends DTO
 
     protected string $accountId;
     protected array $userIds;
+    protected array $appTokenTypes;
     protected ?string $orderId;
     protected string $notificationType;
     protected string $title;
@@ -106,5 +107,10 @@ class StoreUserPushNotificationDTO extends DTO
     public function getOrderId(): ?string
     {
         return $this->orderId;
+    }
+
+    public function getAppTokenTypes(): array
+    {
+        return $this->appTokenTypes;
     }
 }
