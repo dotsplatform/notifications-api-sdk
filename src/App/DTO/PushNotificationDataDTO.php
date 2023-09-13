@@ -1,22 +1,23 @@
 <?php
 /**
- * Description of StoreNotificationDTO.php
+ * Description of PushNotificationDataDTO.php
  * @copyright Copyright (c) DOTSPLATFORM, LLC
  * @author    Oleksandr Polosmak <o.polosmak@dotsplatform.com>
  */
 
 namespace Dotsplatform\Notifications\DTO;
 
+
 use Dots\Data\DTO;
 
-class StoreUserPushNotificationDTO extends DTO
+class PushNotificationDataDTO extends DTO
 {
     public const NOTIFICATION_TYPE_MESSAGE = 'message';
     public const NOTIFICATION_TYPE_DATA = 'data';
 
     public const SHOW_MESSAGE_NOTIFICATION_IN_ACTIVE_APP_YES = 1;
     public const SHOW_MESSAGE_NOTIFICATION_IN_ACTIVE_APP_NO = 0;
-    
+
     public const ACTION_TYPE_SERVICE = 'service';
     public const ACTION_TYPE_INFO = 'info';
     public const ACTION_TYPE_PROMO = 'promo';
@@ -29,9 +30,6 @@ class StoreUserPushNotificationDTO extends DTO
     public const SOUND_DEFAULT = 'default';
     public const SOUND_BUSINESS_APP = 'ring3x';
 
-    protected string $accountId;
-    protected array $userIds;
-    protected array $appTokenTypes;
     protected ?string $orderId;
     protected string $notificationType;
     protected string $title;
@@ -47,16 +45,6 @@ class StoreUserPushNotificationDTO extends DTO
     {
         $data['linkData'] = NotificationsLinkDTO::fromArray($data['linkData'] ?? []);
         return parent::fromArray($data);
-    }
-
-    public function getAccountId(): string
-    {
-        return $this->accountId;
-    }
-
-    public function getUserIds(): array
-    {
-        return $this->userIds;
     }
 
     public function getNotificationType(): string
@@ -107,10 +95,5 @@ class StoreUserPushNotificationDTO extends DTO
     public function getOrderId(): ?string
     {
         return $this->orderId;
-    }
-
-    public function getAppTokenTypes(): array
-    {
-        return $this->appTokenTypes;
     }
 }

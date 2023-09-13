@@ -9,7 +9,7 @@ namespace Dotsplatform\Notifications\DTO;
 
 use Dots\Data\DTO;
 
-class NotificationsCampaignFormDTO extends DTO
+class CampaignFormDTO extends DTO
 {
     protected ?string $cityId;
     protected ?string $userGroupId;

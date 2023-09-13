@@ -10,13 +10,15 @@ namespace Dotsplatform\Notifications\Clients;
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
-use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
+use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
-use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
+use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
-use Dotsplatform\Notifications\Entities\NotificationsCampaign;
-use Dotsplatform\Notifications\Entities\NotificationsCampaigns;
+use Dotsplatform\Notifications\Entities\Campaign;
+use Dotsplatform\Notifications\Entities\Campaigns;
 use Dotsplatform\Notifications\NotificationsClient;
 use RuntimeException;
 
@@ -61,26 +63,26 @@ class FailNotificationsStubClient implements NotificationsClient
         string $account,
         int $limit,
         int $offset = 0,
-    ): NotificationsCampaigns {
-        return NotificationsCampaigns::empty();
+    ): Campaigns {
+        return Campaigns::empty();
     }
 
-    public function createNotificationsCampaign(NotificationsCampaignFormDTO $dto): NotificationsCampaign
+    public function createNotificationsCampaign(CampaignFormDTO $dto): Campaign
     {
         throw new RuntimeException('Store NotificationsCampaign error');
     }
 
-    public function updateNotificationsCampaign(string $id, NotificationsCampaignFormDTO $dto): void
+    public function updateNotificationsCampaign(string $id, CampaignFormDTO $dto): void
     {
         // TODO: Implement updateNotificationsCampaign() method.
     }
 
-    public function findNotificationCampaign(string $accountId, string $id): ?NotificationsCampaign
+    public function findNotificationCampaign(string $accountId, string $id): ?Campaign
     {
         return null;
     }
 
-    public function sendUserPush(string $account, StoreUserPushNotificationsList $list): void
+    public function sendUsersPushes(string $account, SendUserPushNotifications $list): void
     {
         // TODO: Implement sendUserPush() method.
     }
@@ -88,5 +90,15 @@ class FailNotificationsStubClient implements NotificationsClient
     public function findUserAppToken(string $userId): ?AppToken
     {
         return null;
+    }
+
+    public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void
+    {
+        // TODO: Implement sendUserCourierPush() method.
+    }
+
+    public function sendAppTokenPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
+    {
+        // TODO: Implement sendAppTokenPushNotification() method.
     }
 }

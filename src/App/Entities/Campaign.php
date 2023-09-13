@@ -11,7 +11,7 @@ use Dots\Data\Entity;
 use Dotsplatform\Notifications\DTO\NotificationsLinkDTO;
 use Dotsplatform\Notifications\DTO\NotificationType;
 
-class NotificationsCampaign extends Entity
+class Campaign extends Entity
 {
     public const STATUS_DRAFT = 0;
     public const STATUS_APPROVED = 10;

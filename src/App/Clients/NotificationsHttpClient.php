@@ -8,14 +8,16 @@
 namespace Dotsplatform\Notifications\Clients;
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
+use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
-use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
-use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
+use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
-use Dotsplatform\Notifications\Entities\NotificationsCampaign;
-use Dotsplatform\Notifications\Entities\NotificationsCampaigns;
+use Dotsplatform\Notifications\Entities\Campaign;
+use Dotsplatform\Notifications\Entities\Campaigns;
 use Dotsplatform\Notifications\NotificationsClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
@@ -31,6 +33,8 @@ class NotificationsHttpClient implements NotificationsClient
     private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
+    private const STORE_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
+    private const STORE_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
     private const GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
@@ -120,11 +124,38 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function sendUserPush(string $account, StoreUserPushNotificationsList $list,): void
+    public function sendUsersPushes(string $account, SendUserPushNotifications $list): void
     {
         $url = sprintf(self::STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE, $account);
         try {
-            $this->makeClient()->post($url, ['json' => ['items' => $list->toArray()]]);
+            $this->makeClient()->post($url, ['json' => ['items' => $list->toRequestData()]]);
+        } catch (GuzzleException) {
+        }
+    }
+
+    public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void
+    {
+        $url = sprintf(
+            self::STORE_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE,
+            $dto->getAccountId(),
+            $dto->getUserId(),
+        );
+        try {
+            $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
+        } catch (GuzzleException) {
+        }
+    }
+
+    public function sendAppTokenPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
+    {
+        $url = sprintf(
+            self::STORE_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE,
+            $dto->getAccountId(),
+            $dto->getAppTokenId(),
+            $dto->getUserId(),
+        );
+        try {
+            $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
         } catch (GuzzleException) {
         }
     }
@@ -171,7 +202,7 @@ class NotificationsHttpClient implements NotificationsClient
         string $account,
         int $limit,
         int $offset = 0,
-    ): NotificationsCampaigns {
+    ): Campaigns {
         $url = sprintf(self::ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE, $account);
         try {
             $data = $this->decodeResponse($this->makeClient()->get($url, [
@@ -184,10 +215,10 @@ class NotificationsHttpClient implements NotificationsClient
             $data = [];
         }
 
-        return NotificationsCampaigns::fromArray($data);
+        return Campaigns::fromArray($data);
     }
 
-    public function createNotificationsCampaign(NotificationsCampaignFormDTO $dto): NotificationsCampaign
+    public function createNotificationsCampaign(CampaignFormDTO $dto): Campaign
     {
         $url = sprintf(self::CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE, $dto->getAccountId());
         try {
@@ -198,16 +229,16 @@ class NotificationsHttpClient implements NotificationsClient
         } catch (GuzzleException) {
             throw new RuntimeException('Create notifications campaign error');
         }
-        return NotificationsCampaign::fromArray($data);
+        return Campaign::fromArray($data);
     }
 
-    public function updateNotificationsCampaign(string $id, NotificationsCampaignFormDTO $dto): void
+    public function updateNotificationsCampaign(string $id, CampaignFormDTO $dto): void
     {
         $url = sprintf(self::UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE, $dto->getAccountId(), $id);
         $this->makeClient()->put($url, ['json' => $dto->toArray()]);
     }
 
-    public function findNotificationCampaign(string $accountId, string $id): ?NotificationsCampaign
+    public function findNotificationCampaign(string $accountId, string $id): ?Campaign
     {
         $url = sprintf(self::FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE, $accountId, $id);
         try {
@@ -221,7 +252,7 @@ class NotificationsHttpClient implements NotificationsClient
             return null;
         }
 
-        return NotificationsCampaign::fromArray($data);
+        return Campaign::fromArray($data);
     }
 
     protected function makeClient(): GuzzleClient

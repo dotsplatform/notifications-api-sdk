@@ -10,15 +10,21 @@ namespace Dotsplatform\Notifications\DTO;
 
 use Illuminate\Support\Collection;
 
-/** @extends Collection<int, StoreUserPushNotificationDTO> */
-class StoreUserPushNotificationsList extends Collection
+/** @extends Collection<int, SendUsersPushNotificationDTO> */
+class SendUserPushNotifications extends Collection
 {
     public static function fromArray(array $data): self
     {
         return new self(array_map(
-            fn(array $item) => StoreUserPushNotificationDTO::fromArray($item),
+            fn(array $item) => SendUsersPushNotificationDTO::fromArray($item),
             $data,
         ));
     }
 
+    public function toRequestData(): array
+    {
+       return $this->map(
+                fn(SendUsersPushNotificationDTO $item) => $item->toRequestData()
+            )->toArray();
+    }
 }

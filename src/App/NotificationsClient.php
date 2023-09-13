@@ -8,14 +8,16 @@
 namespace Dotsplatform\Notifications;
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
+use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
-use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
-use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
+use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
-use Dotsplatform\Notifications\Entities\NotificationsCampaign;
-use Dotsplatform\Notifications\Entities\NotificationsCampaigns;
+use Dotsplatform\Notifications\Entities\Campaign;
+use Dotsplatform\Notifications\Entities\Campaigns;
 
 interface NotificationsClient
 {
@@ -31,7 +33,11 @@ interface NotificationsClient
 
     public function storeAccount(NotificationsAccount $account): void;
 
-    public function sendUserPush(string $account, StoreUserPushNotificationsList $list): void;
+    public function sendUsersPushes(string $account, SendUserPushNotifications $list): void;
+
+    public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void;
+
+    public function sendAppTokenPushNotification(SendAppTokenUserPushNotificationDTO $dto): void;
 
     public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList;
 
@@ -41,11 +47,11 @@ interface NotificationsClient
         string $account,
         int $limit,
         int $offset = 0,
-    ): NotificationsCampaigns;
+    ): Campaigns;
 
-    public function createNotificationsCampaign(NotificationsCampaignFormDTO $dto): NotificationsCampaign;
+    public function createNotificationsCampaign(CampaignFormDTO $dto): Campaign;
 
-    public function updateNotificationsCampaign(string $id, NotificationsCampaignFormDTO $dto): void;
+    public function updateNotificationsCampaign(string $id, CampaignFormDTO $dto): void;
 
-    public function findNotificationCampaign(string $accountId, string $id): ?NotificationsCampaign;
+    public function findNotificationCampaign(string $accountId, string $id): ?Campaign;
 }
