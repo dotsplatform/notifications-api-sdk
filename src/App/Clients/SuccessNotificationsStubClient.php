@@ -129,7 +129,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         // TODO: Implement sendUserCourierPush() method.
     }
 
-    public function sendAppTokenPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
+    public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
     {
         // TODO: Implement sendAppTokenPushNotification() method.
     }

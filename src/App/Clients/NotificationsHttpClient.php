@@ -146,7 +146,7 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function sendAppTokenPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
+    public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
     {
         $url = sprintf(
             self::STORE_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE,

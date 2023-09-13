@@ -37,7 +37,7 @@ interface NotificationsClient
 
     public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void;
 
-    public function sendAppTokenPushNotification(SendAppTokenUserPushNotificationDTO $dto): void;
+    public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void;
 
     public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList;
 
