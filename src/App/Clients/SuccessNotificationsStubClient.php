@@ -9,7 +9,7 @@ namespace Dotsplatform\Notifications\Clients;
 
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
-use Dotsplatform\Notifications\DTO\GetAppTokenPushNotificationsDTO;
+use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationResponseDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
@@ -64,7 +64,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         // TODO: Implement storeAccount() method.
     }
 
-    public function getAppTokenPushNotifications(GetAppTokenPushNotificationsDTO $dto): PushNotificationsResponseList
+    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         return PushNotificationsResponseList::fromArray([
             [
@@ -82,7 +82,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         ]);
     }
 
-    public function getUnreadAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
+    public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         return 1;
     }

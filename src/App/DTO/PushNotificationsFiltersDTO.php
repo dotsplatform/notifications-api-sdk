@@ -9,7 +9,7 @@ namespace Dotsplatform\Notifications\DTO;
 
 use Dots\Data\DTO;
 
-class GetAppTokenPushNotificationsDTO extends DTO
+class PushNotificationsFiltersDTO extends DTO
 {
     protected string $accountId;
     protected ?string $userId;

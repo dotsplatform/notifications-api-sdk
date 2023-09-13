@@ -9,7 +9,7 @@ namespace Dotsplatform\Notifications\Clients;
 
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
-use Dotsplatform\Notifications\DTO\GetAppTokenPushNotificationsDTO;
+use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
@@ -47,12 +47,12 @@ class FailNotificationsStubClient implements NotificationsClient
         // TODO: Implement storeAccount() method.
     }
 
-    public function getAppTokenPushNotifications(GetAppTokenPushNotificationsDTO $dto): PushNotificationsResponseList
+    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         return PushNotificationsResponseList::empty();
     }
 
-    public function getUnreadAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
+    public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         return 0;
     }

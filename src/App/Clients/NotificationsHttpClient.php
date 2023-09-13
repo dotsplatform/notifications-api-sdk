@@ -8,7 +8,7 @@
 namespace Dotsplatform\Notifications\Clients;
 
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
-use Dotsplatform\Notifications\DTO\GetAppTokenPushNotificationsDTO;
+use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\NotificationsCampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\StoreUserPushNotificationsList;
@@ -129,7 +129,7 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function getAppTokenPushNotifications(GetAppTokenPushNotificationsDTO $dto): PushNotificationsResponseList
+    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         $url = sprintf(
             self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE,
@@ -147,7 +147,7 @@ class NotificationsHttpClient implements NotificationsClient
         return PushNotificationsResponseList::fromArray($data);
     }
 
-    public function getUnreadAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
+    public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         $url = sprintf(self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
             $dto->getAccountId(),
