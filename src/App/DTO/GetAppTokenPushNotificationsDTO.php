@@ -11,25 +11,25 @@ use Dots\Data\DTO;
 
 class GetAppTokenPushNotificationsDTO extends DTO
 {
-    protected string $account;
-    protected ?string $user;
-    protected string $appToken;
+    protected string $accountId;
+    protected ?string $userId;
+    protected string $appTokenId;
     protected int $limit = 50;
     protected int $offset = 0;
 
-    public function getAccount(): string
+    public function getAccountId(): string
     {
-        return $this->account;
+        return $this->accountId;
     }
 
-    public function getUser(): ?string
+    public function getUserId(): ?string
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function getAppToken(): string
+    public function getAppTokenId(): string
     {
-        return $this->appToken;
+        return $this->appTokenId;
     }
 
     public function getLimit(): int

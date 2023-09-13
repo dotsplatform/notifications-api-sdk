@@ -8,7 +8,6 @@
 namespace Dotsplatform\Notifications\DTO\Response;
 
 use Dots\Data\DTO;
-
 class PushNotificationResponseDTO extends DTO
 {
     public const READ_YES = 1;
@@ -19,7 +18,7 @@ class PushNotificationResponseDTO extends DTO
     protected string $text;
     protected ?string $image;
     protected int $sent_at;
-    protected int $read;
+    protected bool $read;
     protected ?array $pushNotificationActionData;
     protected array $linkData;
 
@@ -48,11 +47,6 @@ class PushNotificationResponseDTO extends DTO
         return $this->sent_at;
     }
 
-    public function getRead(): int
-    {
-        return $this->read;
-    }
-
     public function getPushNotificationActionData(): ?array
     {
         return $this->pushNotificationActionData;
@@ -61,5 +55,10 @@ class PushNotificationResponseDTO extends DTO
     public function getLinkData(): array
     {
         return $this->linkData;
+    }
+
+    public function isRead(): bool
+    {
+        return $this->read;
     }
 }

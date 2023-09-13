@@ -26,10 +26,10 @@ class NotificationsHttpClient implements NotificationsClient
 {
     private const FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
     private const STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
-    private const ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns';
-    private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns';
-    private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns/%s';
-    private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/notifications-campaigns/%s';
+    private const ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
+    private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
+    private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
+    private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
     private const GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
@@ -133,8 +133,8 @@ class NotificationsHttpClient implements NotificationsClient
     {
         $url = sprintf(
             self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE,
-            $dto->getAccount(),
-            $dto->getAppToken(),
+            $dto->getAccountId(),
+            $dto->getAppTokenId(),
         );
         try {
             $data = $this->decodeResponse(
@@ -150,8 +150,8 @@ class NotificationsHttpClient implements NotificationsClient
     public function getUnreadAppTokenPushNotificationsCount(GetAppTokenPushNotificationsDTO $dto): int
     {
         $url = sprintf(self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
-            $dto->getAccount(),
-            $dto->getAppToken(),
+            $dto->getAccountId(),
+            $dto->getAppTokenId(),
         );
         try {
             $data = $this->decodeResponse(
