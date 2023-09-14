@@ -11,6 +11,7 @@ use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
+use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
@@ -32,10 +33,11 @@ class NotificationsHttpClient implements NotificationsClient
     private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
     private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
-    private const STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
-    private const STORE_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
-    private const STORE_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
-    private const GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
+    private const SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
+    private const SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
+    private const SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
+    private const SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/push';
+    private const UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
     private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
@@ -126,7 +128,7 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function sendUsersPushes(string $account, SendUserPushNotifications $list): void
     {
-        $url = sprintf(self::STORE_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE, $account);
+        $url = sprintf(self::SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE, $account);
         try {
             $this->makeClient()->post($url, ['json' => ['items' => $list->toRequestData()]]);
         } catch (GuzzleException) {
@@ -136,9 +138,22 @@ class NotificationsHttpClient implements NotificationsClient
     public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void
     {
         $url = sprintf(
-            self::STORE_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE,
+            self::SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE,
             $dto->getAccountId(),
             $dto->getUserId(),
+        );
+        try {
+            $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
+        } catch (GuzzleException) {
+        }
+    }
+
+    public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void
+    {
+        $url = sprintf(
+            self::SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE,
+            $dto->getAccountId(),
+            $dto->getAppTokenId(),
         );
         try {
             $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
@@ -149,7 +164,7 @@ class NotificationsHttpClient implements NotificationsClient
     public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
     {
         $url = sprintf(
-            self::STORE_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE,
+            self::SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE,
             $dto->getAccountId(),
             $dto->getAppTokenId(),
             $dto->getUserId(),
@@ -180,7 +195,7 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
-        $url = sprintf(self::GET_APP_TOKEN_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
+        $url = sprintf(self::UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
             $dto->getAccountId(),
             $dto->getAppTokenId(),
         );

@@ -11,13 +11,14 @@ use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
+use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
-use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\Campaign;
 use Dotsplatform\Notifications\Entities\Campaigns;
+use Dotsplatform\Notifications\Entities\NotificationsAccount;
 
 interface NotificationsClient
 {
@@ -36,6 +37,8 @@ interface NotificationsClient
     public function sendUsersPushes(string $account, SendUserPushNotifications $list): void;
 
     public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void;
+
+    public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void;
 
     public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void;
 
