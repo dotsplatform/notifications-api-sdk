@@ -13,6 +13,7 @@ use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationResponseDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
+use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
@@ -130,6 +131,11 @@ class SuccessNotificationsStubClient implements NotificationsClient
     }
 
     public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
+    {
+        // TODO: Implement sendAppTokenPushNotification() method.
+    }
+
+    public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void
     {
         // TODO: Implement sendAppTokenPushNotification() method.
     }
