@@ -41,7 +41,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
     private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
-    private const SHOW_USER_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/users/%s';
+    private const SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE = '/api/app-tokens/users/%s';
     private const UPDATE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
 
     public function storeAppToken(AppTokenFormDTO $dto): AppToken
@@ -84,12 +84,12 @@ class NotificationsHttpClient implements NotificationsClient
         return AppToken::fromArray($data);
     }
 
-    public function findUserAppToken(string $userId): ?AppToken
+    public function findUserAppTokenByTypes(string $userId, array $appTokenTypes): ?AppToken
     {
-        $url = sprintf(self::SHOW_USER_APP_TOKEN_URL_TEMPLATE, $userId);
+        $url = sprintf(self::SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE, $userId);
         try {
             $data = $this->decodeResponse(
-                $this->makeClient()->get($url),
+                $this->makeClient()->get($url, ['json' => ['app_token_types' => $appTokenTypes]]),
             );
             if (empty($data)) {
                 return null;

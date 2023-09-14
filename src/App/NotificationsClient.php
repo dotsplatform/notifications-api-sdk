@@ -28,7 +28,7 @@ interface NotificationsClient
 
     public function findAppToken(string $id): ?AppToken;
 
-    public function findUserAppToken(string $userId): ?AppToken;
+    public function findUserAppTokenByTypes(string $userId, array $appTokenTypes): ?AppToken;
 
     public function findAccount(string $id): ?NotificationsAccount;
 
