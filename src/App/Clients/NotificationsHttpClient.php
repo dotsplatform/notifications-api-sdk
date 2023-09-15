@@ -89,7 +89,7 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE, $userId);
         try {
             $data = $this->decodeResponse(
-                $this->makeClient()->get($url, ['json' => ['app_token_types' => $appTokenTypes]]),
+                $this->makeClient()->get($url, ['json' => ['appTokenTypes' => $appTokenTypes]]),
             );
             if (empty($data)) {
                 return null;
