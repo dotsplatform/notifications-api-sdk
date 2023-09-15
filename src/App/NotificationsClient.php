@@ -46,15 +46,15 @@ interface NotificationsClient
 
     public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int;
 
-    public function getAccountNotificationsCampaigns(
+    public function getAccountCampaigns(
         string $account,
         int $limit,
         int $offset = 0,
     ): Campaigns;
 
-    public function createNotificationsCampaign(CampaignFormDTO $dto): Campaign;
+    public function createCampaign(CampaignFormDTO $dto): Campaign;
 
-    public function updateNotificationsCampaign(string $id, CampaignFormDTO $dto): void;
+    public function updateCampaign(string $id, CampaignFormDTO $dto): void;
 
-    public function findNotificationCampaign(string $accountId, string $id): ?Campaign;
+    public function findCampaign(string $accountId, string $id): ?Campaign;
 }

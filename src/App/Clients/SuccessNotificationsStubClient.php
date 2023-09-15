@@ -90,7 +90,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         return 1;
     }
 
-    public function getAccountNotificationsCampaigns(
+    public function getAccountCampaigns(
         string $account,
         int $limit,
         int $offset = 0,
@@ -98,19 +98,19 @@ class SuccessNotificationsStubClient implements NotificationsClient
         return Campaigns::empty();
     }
 
-    public function createNotificationsCampaign(CampaignFormDTO $dto): Campaign
+    public function createCampaign(CampaignFormDTO $dto): Campaign
     {
         return Campaign::fromArray(array_merge([
             'id' => Str::uuid()->toString(),
         ], $dto->toArray()));
     }
 
-    public function updateNotificationsCampaign(string $id, CampaignFormDTO $dto): void
+    public function updateCampaign(string $id, CampaignFormDTO $dto): void
     {
         // TODO: Implement updateNotificationsCampaign() method.
     }
 
-    public function findNotificationCampaign(string $accountId, string $id): ?Campaign
+    public function findCampaign(string $accountId, string $id): ?Campaign
     {
         return null;
     }

@@ -213,7 +213,7 @@ class NotificationsHttpClient implements NotificationsClient
         return $data['count'] ?? 0;
     }
 
-    public function getAccountNotificationsCampaigns(
+    public function getAccountCampaigns(
         string $account,
         int $limit,
         int $offset = 0,
@@ -233,7 +233,7 @@ class NotificationsHttpClient implements NotificationsClient
         return Campaigns::fromArray($data);
     }
 
-    public function createNotificationsCampaign(CampaignFormDTO $dto): Campaign
+    public function createCampaign(CampaignFormDTO $dto): Campaign
     {
         $url = sprintf(self::CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE, $dto->getAccountId());
         try {
@@ -247,13 +247,13 @@ class NotificationsHttpClient implements NotificationsClient
         return Campaign::fromArray($data);
     }
 
-    public function updateNotificationsCampaign(string $id, CampaignFormDTO $dto): void
+    public function updateCampaign(string $id, CampaignFormDTO $dto): void
     {
         $url = sprintf(self::UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE, $dto->getAccountId(), $id);
         $this->makeClient()->put($url, ['json' => $dto->toArray()]);
     }
 
-    public function findNotificationCampaign(string $accountId, string $id): ?Campaign
+    public function findCampaign(string $accountId, string $id): ?Campaign
     {
         $url = sprintf(self::FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE, $accountId, $id);
         try {
