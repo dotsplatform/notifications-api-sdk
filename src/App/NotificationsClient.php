@@ -14,7 +14,7 @@ use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
-use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
+use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\Campaign;
 use Dotsplatform\Notifications\Entities\Campaigns;
@@ -34,9 +34,9 @@ interface NotificationsClient
 
     public function storeAccount(NotificationsAccount $account): void;
 
-    public function sendUsersPushes(string $account, SendUserPushNotifications $list): void;
+    public function sendUsersPushNotifications(string $account, SendUsersPushNotifications $list): void;
 
-    public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void;
+    public function sendUserCourierPushNotification(SendUserPushNotificationDTO $dto): void;
 
     public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void;
 

@@ -16,7 +16,7 @@ use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
-use Dotsplatform\Notifications\DTO\SendUserPushNotifications;
+use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\Campaign;
@@ -115,7 +115,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         return null;
     }
 
-    public function sendUsersPushes(string $account, SendUserPushNotifications $list): void
+    public function sendUsersPushNotifications(string $account, SendUsersPushNotifications $list): void
     {
         // TODO: Implement sendUserPush() method.
     }
@@ -125,7 +125,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         return null;
     }
 
-    public function sendUserCourierPush(SendUserPushNotificationDTO $dto): void
+    public function sendUserCourierPushNotification(SendUserPushNotificationDTO $dto): void
     {
         // TODO: Implement sendUserCourierPush() method.
     }

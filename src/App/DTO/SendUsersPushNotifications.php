@@ -11,7 +11,7 @@ namespace Dotsplatform\Notifications\DTO;
 use Illuminate\Support\Collection;
 
 /** @extends Collection<int, SendUsersPushNotificationDTO> */
-class SendUserPushNotifications extends Collection
+class SendUsersPushNotifications extends Collection
 {
     public static function fromArray(array $data): self
     {
