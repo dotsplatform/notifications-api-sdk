@@ -13,7 +13,21 @@ use Illuminate\Support\Collection;
 
 class CampaignStatistics extends Entity
 {
+    protected string $accountId;
+
+    protected string $campaignId;
+
     protected Collection $fields;
+
+    public static function fromArray(array $data): static
+    {
+        $data['fields'] = collect($data['fields'])
+            ->map(function (array $fieldData) {
+                return CampaignStatisticsFieldDTO::fromArray($fieldData);
+            });
+
+        return parent::fromArray($data);
+    }
 
     /**
      * @return Collection<CampaignStatisticsFieldDTO>
@@ -21,5 +35,15 @@ class CampaignStatistics extends Entity
     public function getFields(): Collection
     {
         return $this->fields;
+    }
+
+    public function getAccountId(): string
+    {
+        return $this->accountId;
+    }
+
+    public function getCampaignId(): string
+    {
+        return $this->campaignId;
     }
 }

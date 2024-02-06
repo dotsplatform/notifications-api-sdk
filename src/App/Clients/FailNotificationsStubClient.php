@@ -17,6 +17,7 @@ use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
+use Dotsplatform\Notifications\Entities\CampaignStatistics;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\Campaign;
 use Dotsplatform\Notifications\Entities\Campaigns;
@@ -106,5 +107,20 @@ class FailNotificationsStubClient implements NotificationsClient
     public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void
     {
         // TODO: Implement sendAppTokenPushNotification() method.
+    }
+
+    public function findStatisticsByCampaign(Campaign $campaign): CampaignStatistics
+    {
+        throw new RuntimeException('CampaignStatistics not found');
+    }
+
+    public function updateStatisticsForCampaign(Campaign $campaign): void
+    {
+        // TODO: Implement updateStatisticsForCampaign() method.
+    }
+
+    public function updateStatisticsForCampaignsCreatedInTheLastMonth(): void
+    {
+        // TODO: Implement updateStatisticsForCampaignsCreatedInTheLastMonth() method.
     }
 }
