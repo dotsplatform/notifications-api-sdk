@@ -153,9 +153,4 @@ class SuccessNotificationsStubClient implements NotificationsClient
     {
         // TODO: Implement updateStatisticsForCampaign() method.
     }
-
-    public function updateStatisticsForCampaignsCreatedInTheLastMonth(): void
-    {
-        // TODO: Implement updateStatisticsForCampaignsCreatedInTheLastMonth() method.
-    }
 }

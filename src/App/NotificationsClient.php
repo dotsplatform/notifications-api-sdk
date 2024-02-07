@@ -62,6 +62,4 @@ interface NotificationsClient
     public function findStatisticsByCampaign(Campaign $campaign): CampaignStatistics;
 
     public function updateStatisticsForCampaign(Campaign $campaign): void;
-
-    public function updateStatisticsForCampaignsCreatedInTheLastMonth(): void;
 }
