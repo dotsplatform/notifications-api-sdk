@@ -8,33 +8,26 @@
 namespace Dotsplatform\Notifications\Entities;
 
 use Dots\Data\Entity;
-use Dotsplatform\Notifications\DTO\CampaignStatisticsFieldDTO;
-use Illuminate\Support\Collection;
 
 class CampaignStatistics extends Entity
 {
+    protected string $id;
+
     protected string $accountId;
 
-    protected string $campaignId;
+    protected int $totalAmount = 0;
 
-    protected Collection $fields;
+    protected int $successAmount = 0;
 
-    public static function fromArray(array $data): static
+    protected int $failAmount = 0;
+
+    protected int $readAmount = 0;
+
+    protected int $unreadAmount = 0;
+
+    public function getId(): string
     {
-        $data['fields'] = collect($data['fields'])
-            ->map(function (array $fieldData) {
-                return CampaignStatisticsFieldDTO::fromArray($fieldData);
-            });
-
-        return parent::fromArray($data);
-    }
-
-    /**
-     * @return Collection<CampaignStatisticsFieldDTO>
-     */
-    public function getFields(): Collection
-    {
-        return $this->fields;
+        return $this->id;
     }
 
     public function getAccountId(): string
@@ -42,8 +35,62 @@ class CampaignStatistics extends Entity
         return $this->accountId;
     }
 
-    public function getCampaignId(): string
+    public function getTotalAmount(): int
     {
-        return $this->campaignId;
+        return $this->totalAmount;
+    }
+
+    public function getSuccessAmount(): int
+    {
+        return $this->successAmount;
+    }
+
+    public function getFailAmount(): int
+    {
+        return $this->failAmount;
+    }
+
+    public function getReadAmount(): int
+    {
+        return $this->readAmount;
+    }
+
+    public function getUnreadAmount(): int
+    {
+        return $this->unreadAmount;
+    }
+
+    public function getPercentTotalAmount(): int
+    {
+        return $this->getTotalAmount();
+    }
+
+    public function getPercentSuccessAmount(): int
+    {
+        return $this->getPercentOfTotalAmount($this->getSuccessAmount());
+    }
+
+    public function getPercentFailAmount(): int
+    {
+        return $this->getPercentOfTotalAmount($this->getFailAmount());
+    }
+
+    public function getPercentReadAmount(): int
+    {
+        return $this->getPercentOfTotalAmount($this->getReadAmount());
+    }
+
+    public function getPercentUnreadAmount(): int
+    {
+        return $this->getPercentOfTotalAmount($this->getUnreadAmount());
+    }
+
+    private function getPercentOfTotalAmount(int $value): int
+    {
+        if (! $this->getTotalAmount()) {
+            return 0;
+        }
+
+        return $value / $this->getTotalAmount();
     }
 }
