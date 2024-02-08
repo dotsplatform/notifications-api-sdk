@@ -62,7 +62,7 @@ class CampaignStatistics extends Entity
 
     public function getPercentTotalAmount(): int
     {
-        return $this->getTotalAmount();
+        return $this->getPercentOfTotalAmount($this->getTotalAmount());
     }
 
     public function getPercentSuccessAmount(): int
@@ -91,6 +91,6 @@ class CampaignStatistics extends Entity
             return 0;
         }
 
-        return $value / $this->getTotalAmount();
+        return ($value / $this->getTotalAmount()) * 100;
     }
 }
