@@ -109,7 +109,7 @@ class FailNotificationsStubClient implements NotificationsClient
         // TODO: Implement sendAppTokenPushNotification() method.
     }
 
-    public function findStatisticsByCampaign(Campaign $campaign): CampaignStatistics
+    public function findStatisticsByCampaign(Campaign $campaign): ?CampaignStatistics
     {
         throw new RuntimeException('CampaignStatistics not found');
     }

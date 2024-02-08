@@ -59,7 +59,7 @@ interface NotificationsClient
 
     public function findCampaign(string $accountId, string $id): ?Campaign;
 
-    public function findStatisticsByCampaign(Campaign $campaign): CampaignStatistics;
+    public function findStatisticsByCampaign(Campaign $campaign): ?CampaignStatistics;
 
     public function updateStatisticsForCampaign(Campaign $campaign): void;
 }

@@ -141,7 +141,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         // TODO: Implement sendAppTokenPushNotification() method.
     }
 
-    public function findStatisticsByCampaign(Campaign $campaign): CampaignStatistics
+    public function findStatisticsByCampaign(Campaign $campaign): ?CampaignStatistics
     {
         return CampaignStatistics::fromArray([
             'accountId' => $campaign->getAccountId(),
