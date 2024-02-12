@@ -15,15 +15,15 @@ class CampaignStatistics extends Entity
 
     protected string $accountId;
 
-    protected int $totalAmount = 0;
+    protected int $totalCount = 0;
 
-    protected int $successAmount = 0;
+    protected int $successCount = 0;
 
-    protected int $failAmount = 0;
+    protected int $failCount = 0;
 
-    protected int $readAmount = 0;
+    protected int $readCount = 0;
 
-    protected int $unreadAmount = 0;
+    protected int $unreadCount = 0;
 
     public function getId(): string
     {
@@ -35,62 +35,62 @@ class CampaignStatistics extends Entity
         return $this->accountId;
     }
 
-    public function getTotalAmount(): int
+    public function getTotalCount(): int
     {
-        return $this->totalAmount;
+        return $this->totalCount;
     }
 
-    public function getSuccessAmount(): int
+    public function getSuccessCount(): int
     {
-        return $this->successAmount;
+        return $this->successCount;
     }
 
-    public function getFailAmount(): int
+    public function getFailCount(): int
     {
-        return $this->failAmount;
+        return $this->failCount;
     }
 
-    public function getReadAmount(): int
+    public function getReadCount(): int
     {
-        return $this->readAmount;
+        return $this->readCount;
     }
 
-    public function getUnreadAmount(): int
+    public function getUnreadCount(): int
     {
-        return $this->unreadAmount;
+        return $this->unreadCount;
     }
 
-    public function getPercentTotalAmount(): int
+    public function getPercentTotalCount(): int
     {
-        return $this->getPercentOfTotalAmount($this->getTotalAmount());
+        return $this->getPercentOfTotalCount($this->getTotalCount());
     }
 
-    public function getPercentSuccessAmount(): int
+    public function getPercentSuccessCount(): int
     {
-        return $this->getPercentOfTotalAmount($this->getSuccessAmount());
+        return $this->getPercentOfTotalCount($this->getSuccessCount());
     }
 
-    public function getPercentFailAmount(): int
+    public function getPercentFailCount(): int
     {
-        return $this->getPercentOfTotalAmount($this->getFailAmount());
+        return $this->getPercentOfTotalCount($this->getFailCount());
     }
 
-    public function getPercentReadAmount(): int
+    public function getPercentReadCount(): int
     {
-        return $this->getPercentOfTotalAmount($this->getReadAmount());
+        return $this->getPercentOfTotalCount($this->getReadCount());
     }
 
-    public function getPercentUnreadAmount(): int
+    public function getPercentUnreadCount(): int
     {
-        return $this->getPercentOfTotalAmount($this->getUnreadAmount());
+        return $this->getPercentOfTotalCount($this->getUnreadCount());
     }
 
-    private function getPercentOfTotalAmount(int $value): int
+    private function getPercentOfTotalCount(int $value): int
     {
-        if (! $this->getTotalAmount()) {
+        if (! $this->getTotalCount()) {
             return 0;
         }
 
-        return ($value / $this->getTotalAmount()) * 100;
+        return ($value / $this->getTotalCount()) * 100;
     }
 }

@@ -146,11 +146,11 @@ class SuccessNotificationsStubClient implements NotificationsClient
         return CampaignStatistics::fromArray([
             'id' => $campaign->getId(),
             'accountId' => $campaign->getAccountId(),
-            'totalAmount' => random_int(1, 100),
-            'successAmount' => random_int(1, 20),
-            'failAmount' => random_int(1, 20),
-            'readAmount' => random_int(1, 20),
-            'unreadAmount' => random_int(1, 20),
+            'totalCount' => random_int(1, 100),
+            'successCount' => random_int(1, 20),
+            'failCount' => random_int(1, 20),
+            'readCount' => random_int(1, 20),
+            'unreadCount' => random_int(1, 20),
         ]);
     }
 
