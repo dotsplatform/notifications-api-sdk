@@ -32,7 +32,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
     private const ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
     private const FIND_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
-    private const REFRESH_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics/update';
+    private const UPDATE_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics/update';
     private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
     private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
@@ -290,7 +290,7 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function updateStatisticsForCampaign(Campaign $campaign): void
     {
-        $url = sprintf(self::REFRESH_CAMPAIGN_STATISTICS_URL_TEMPLATE, $campaign->getAccountId(), $campaign->getId());
+        $url = sprintf(self::UPDATE_CAMPAIGN_STATISTICS_URL_TEMPLATE, $campaign->getAccountId(), $campaign->getId());
         $this->makeClient()->put($url);
     }
 
