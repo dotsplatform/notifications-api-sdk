@@ -7,6 +7,7 @@
 
 namespace Dotsplatform\Notifications;
 
+use Dotsplatform\Notifications\DTO\AccountNotificationsRequestDTO;
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
@@ -47,9 +48,7 @@ interface NotificationsClient
     public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int;
 
     public function getAccountCampaigns(
-        string $account,
-        int $limit,
-        int $offset = 0,
+        AccountNotificationsRequestDTO $dto,
     ): Campaigns;
 
     public function createCampaign(CampaignFormDTO $dto): Campaign;

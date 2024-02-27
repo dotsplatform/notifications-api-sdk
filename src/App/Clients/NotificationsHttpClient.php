@@ -7,6 +7,7 @@
 
 namespace Dotsplatform\Notifications\Clients;
 
+use Dotsplatform\Notifications\DTO\AccountNotificationsRequestDTO;
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
@@ -214,17 +215,12 @@ class NotificationsHttpClient implements NotificationsClient
     }
 
     public function getAccountCampaigns(
-        string $account,
-        int $limit,
-        int $offset = 0,
+        AccountNotificationsRequestDTO $dto,
     ): Campaigns {
-        $url = sprintf(self::ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE, $account);
+        $url = sprintf(self::ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE, $dto->getAccountId());
         try {
             $data = $this->decodeResponse($this->makeClient()->get($url, [
-                'json' => [
-                    'limit' => $limit,
-                    'offset' => $offset,
-                ]
+                'json' => $dto->toArray(),
             ]));
         } catch (GuzzleException) {
             $data = [];
