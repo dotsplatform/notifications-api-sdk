@@ -5,7 +5,7 @@
  * @author    Oleksandr Polosmak <o.polosmak@dotsplatform.com>
  */
 
-namespace Dotsplatform\Notifications\DTO;
+namespace Dotsplatform\Notifications\DTO\Request;
 
 
 use Dots\Data\DTO;

@@ -7,7 +7,7 @@
 
 namespace Dotsplatform\Notifications\Clients;
 
-use Dotsplatform\Notifications\DTO\AccountNotificationsRequestDTO;
+use Dotsplatform\Notifications\DTO\Request\AccountNotificationsRequestDTO;
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
