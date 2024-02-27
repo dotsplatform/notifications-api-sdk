@@ -14,8 +14,8 @@ class AccountNotificationsRequestDTO extends DTO
 {
     protected string $accountId;
     protected ?array $statuses;
-    protected int $limit = 50;
-    protected int $offset = 0;
+    protected ?int $limit = 50;
+    protected ?int $offset = 0;
 
     public function getAccountId(): string
     {
@@ -27,12 +27,12 @@ class AccountNotificationsRequestDTO extends DTO
         return $this->statuses;
     }
 
-    public function getLimit(): int
+    public function getLimit(): ?int
     {
         return $this->limit;
     }
 
-    public function getOffset(): int
+    public function getOffset(): ?int
     {
         return $this->offset;
     }
