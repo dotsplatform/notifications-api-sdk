@@ -8,6 +8,7 @@
 namespace Dotsplatform\Notifications\Clients;
 
 
+use Dotsplatform\Notifications\DTO\Request\AccountNotificationsRequestDTO;
 use Dotsplatform\Notifications\DTO\AppTokenFormDTO;
 use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\CampaignFormDTO;
@@ -61,9 +62,7 @@ class FailNotificationsStubClient implements NotificationsClient
     }
 
     public function getAccountCampaigns(
-        string $account,
-        int $limit,
-        int $offset = 0,
+        AccountNotificationsRequestDTO $dto,
     ): Campaigns {
         return Campaigns::empty();
     }
