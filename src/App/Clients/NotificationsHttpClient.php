@@ -17,6 +17,7 @@ use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
+use Dotsplatform\Notifications\Entities\CampaignStatistics;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\Campaign;
 use Dotsplatform\Notifications\Entities\Campaigns;
@@ -31,6 +32,8 @@ class NotificationsHttpClient implements NotificationsClient
     private const FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
     private const STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
     private const ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
+    private const FIND_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
+    private const UPDATE_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
     private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
     private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
@@ -264,6 +267,27 @@ class NotificationsHttpClient implements NotificationsClient
         }
 
         return Campaign::fromArray($data);
+    }
+
+    public function findStatisticsByCampaign(Campaign $campaign): ?CampaignStatistics
+    {
+        $url = sprintf(self::FIND_CAMPAIGN_STATISTICS_URL_TEMPLATE, $campaign->getAccountId(), $campaign->getId());
+        try {
+            $data = $this->decodeResponse($this->makeClient()->get($url));
+            if (empty($data)) {
+                return null;
+            }
+        } catch (GuzzleException) {
+            return null;
+        }
+
+        return CampaignStatistics::fromArray($data);
+    }
+
+    public function updateStatisticsForCampaign(Campaign $campaign): void
+    {
+        $url = sprintf(self::UPDATE_CAMPAIGN_STATISTICS_URL_TEMPLATE, $campaign->getAccountId(), $campaign->getId());
+        $this->makeClient()->put($url);
     }
 
     protected function makeClient(): GuzzleClient

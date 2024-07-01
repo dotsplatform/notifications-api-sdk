@@ -19,6 +19,7 @@ use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\Campaign;
 use Dotsplatform\Notifications\Entities\Campaigns;
+use Dotsplatform\Notifications\Entities\CampaignStatistics;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 
 interface NotificationsClient
@@ -56,4 +57,8 @@ interface NotificationsClient
     public function updateCampaign(string $id, CampaignFormDTO $dto): void;
 
     public function findCampaign(string $accountId, string $id): ?Campaign;
+
+    public function findStatisticsByCampaign(Campaign $campaign): ?CampaignStatistics;
+
+    public function updateStatisticsForCampaign(Campaign $campaign): void;
 }

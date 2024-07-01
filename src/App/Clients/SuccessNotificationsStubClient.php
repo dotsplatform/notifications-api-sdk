@@ -19,6 +19,7 @@ use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
+use Dotsplatform\Notifications\Entities\CampaignStatistics;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\Campaign;
 use Dotsplatform\Notifications\Entities\Campaigns;
@@ -137,5 +138,23 @@ class SuccessNotificationsStubClient implements NotificationsClient
     public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void
     {
         // TODO: Implement sendAppTokenPushNotification() method.
+    }
+
+    public function findStatisticsByCampaign(Campaign $campaign): ?CampaignStatistics
+    {
+        return CampaignStatistics::fromArray([
+            'id' => $campaign->getId(),
+            'accountId' => $campaign->getAccountId(),
+            'totalCount' => random_int(1, 100),
+            'successCount' => random_int(1, 20),
+            'failCount' => random_int(1, 20),
+            'readCount' => random_int(1, 20),
+            'unreadCount' => random_int(1, 20),
+        ]);
+    }
+
+    public function updateStatisticsForCampaign(Campaign $campaign): void
+    {
+        // TODO: Implement updateStatisticsForCampaign() method.
     }
 }
