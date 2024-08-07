@@ -13,7 +13,7 @@ class PushNotificationsFiltersDTO extends DTO
 {
     protected string $accountId;
     protected ?string $userId;
-    protected string $appTokenId;
+    protected ?string $appTokenId;
     protected int $limit = 50;
     protected int $offset = 0;
 
@@ -27,7 +27,7 @@ class PushNotificationsFiltersDTO extends DTO
         return $this->userId;
     }
 
-    public function getAppTokenId(): string
+    public function getAppTokenId(): ?string
     {
         return $this->appTokenId;
     }

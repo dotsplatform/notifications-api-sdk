@@ -41,8 +41,8 @@ class NotificationsHttpClient implements NotificationsClient
     private const SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
     private const SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
     private const SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/push';
-    private const UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
-    private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
+    private const UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/notifications/push/unread/count';
+    private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
     private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
     private const SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE = '/api/app-tokens/users/%s';
@@ -184,7 +184,6 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(
             self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE,
             $dto->getAccountId(),
-            $dto->getAppTokenId(),
         );
         try {
             $data = $this->decodeResponse(
@@ -201,7 +200,6 @@ class NotificationsHttpClient implements NotificationsClient
     {
         $url = sprintf(self::UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
             $dto->getAccountId(),
-            $dto->getAppTokenId(),
         );
         try {
             $data = $this->decodeResponse(
