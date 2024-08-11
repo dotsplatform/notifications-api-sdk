@@ -179,7 +179,7 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         $url = sprintf(
             self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE,
@@ -196,7 +196,7 @@ class NotificationsHttpClient implements NotificationsClient
         return PushNotificationsResponseList::fromArray($data);
     }
 
-    public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
+    public function getUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         $url = sprintf(self::UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
             $dto->getAccountId(),
