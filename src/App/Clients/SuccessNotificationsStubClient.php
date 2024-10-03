@@ -69,7 +69,7 @@ class SuccessNotificationsStubClient implements NotificationsClient
         // TODO: Implement storeAccount() method.
     }
 
-    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         return PushNotificationsResponseList::fromArray([
             [
@@ -87,9 +87,27 @@ class SuccessNotificationsStubClient implements NotificationsClient
         ]);
     }
 
-    public function getUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
+    public function getAppTokenUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         return 1;
+    }
+
+    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    {
+        return PushNotificationsResponseList::fromArray([
+            [
+                'id' => Str::uuid()->toString(),
+                'title' => Str::uuid()->toString(),
+                'text' => Str::uuid()->toString(),
+                'image' => Str::uuid()->toString(),
+                'sent_at' => time(),
+                'read' => PushNotificationResponseDTO::READ_NO,
+                'pushNotificationActionData' => [],
+                'linkData' => [
+                    'url' => Str::uuid()->toString(),
+                ]
+            ]
+        ]);
     }
 
     public function getAccountCampaigns(

@@ -52,14 +52,19 @@ class FailNotificationsStubClient implements NotificationsClient
         // TODO: Implement storeAccount() method.
     }
 
-    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         return PushNotificationsResponseList::empty();
     }
 
-    public function getUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
+    public function getAppTokenUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         return 0;
+    }
+
+    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    {
+        return PushNotificationsResponseList::empty();
     }
 
     public function getAccountCampaigns(

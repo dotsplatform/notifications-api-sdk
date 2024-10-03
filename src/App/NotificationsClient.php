@@ -44,9 +44,11 @@ interface NotificationsClient
 
     public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void;
 
-    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList;
+    public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList;
 
-    public function getUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int;
+    public function getAppTokenUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int;
+
+    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList;
 
     public function getAccountCampaigns(
         AccountNotificationsRequestDTO $dto,
