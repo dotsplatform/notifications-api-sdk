@@ -14,6 +14,7 @@ class PushNotificationsFiltersDTO extends DTO
     protected string $accountId;
     protected ?string $userId;
     protected ?string $appTokenId;
+    protected ?int $read = null;
     protected int $limit = 50;
     protected int $offset = 0;
 
@@ -30,6 +31,11 @@ class PushNotificationsFiltersDTO extends DTO
     public function getAppTokenId(): ?string
     {
         return $this->appTokenId;
+    }
+
+    public function getRead(): ?int
+    {
+        return $this->read;
     }
 
     public function getLimit(): int
