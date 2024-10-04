@@ -24,6 +24,7 @@ use Dotsplatform\Notifications\Entities\Campaigns;
 use Dotsplatform\Notifications\NotificationsClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
@@ -41,8 +42,9 @@ class NotificationsHttpClient implements NotificationsClient
     private const SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
     private const SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
     private const SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/push';
-    private const UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
+    private const INDEX_APP_TOKEN_UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
     private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
+    private const INDEX_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/push';
     private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
     private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
     private const SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE = '/api/app-tokens/users/%s';
@@ -181,10 +183,15 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
+        $appTokenId = $dto->getAppTokenId();
+        if (is_null($appTokenId)) {
+            throw new InvalidArgumentException('AppTokenId cannot be null.');
+        }
+
         $url = sprintf(
             self::INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE,
             $dto->getAccountId(),
-            $dto->getAppTokenId(),
+            $appTokenId,
         );
         try {
             $data = $this->decodeResponse(
@@ -197,11 +204,16 @@ class NotificationsHttpClient implements NotificationsClient
         return PushNotificationsResponseList::fromArray($data);
     }
 
-    public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
+    public function getAppTokenUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
-        $url = sprintf(self::UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
+        $appTokenId = $dto->getAppTokenId();
+        if (is_null($appTokenId)) {
+            throw new InvalidArgumentException('AppTokenId cannot be null.');
+        }
+
+        $url = sprintf(self::INDEX_APP_TOKEN_UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE,
             $dto->getAccountId(),
-            $dto->getAppTokenId(),
+            $appTokenId,
         );
         try {
             $data = $this->decodeResponse(
@@ -215,6 +227,23 @@ class NotificationsHttpClient implements NotificationsClient
         }
 
         return $data['count'] ?? 0;
+    }
+
+    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    {
+        $url = sprintf(
+            self::INDEX_PUSH_NOTIFICATIONS_URL_TEMPLATE,
+            $dto->getAccountId(),
+        );
+        try {
+            $data = $this->decodeResponse(
+                $this->makeClient()->get($url, ['json' => $dto->toArray()]),
+            );
+        } catch (GuzzleException) {
+            $data = [];
+        }
+
+        return PushNotificationsResponseList::fromArray($data);
     }
 
     public function getAccountCampaigns(

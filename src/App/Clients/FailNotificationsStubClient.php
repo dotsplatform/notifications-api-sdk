@@ -57,9 +57,14 @@ class FailNotificationsStubClient implements NotificationsClient
         return PushNotificationsResponseList::empty();
     }
 
-    public function getUnreadAppTokenPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
+    public function getAppTokenUnreadPushNotificationsCount(PushNotificationsFiltersDTO $dto): int
     {
         return 0;
+    }
+
+    public function getPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
+    {
+        return PushNotificationsResponseList::empty();
     }
 
     public function getAccountCampaigns(
