@@ -142,7 +142,7 @@ class NotificationsHttpClient implements NotificationsClient
         try {
             $response = $this->makeClient()->get($url);
             Log::warning('response', [
-                'response' => $response,
+                'response' => $response->getBody(),
             ]);
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),
