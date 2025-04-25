@@ -25,6 +25,7 @@ use Dotsplatform\Notifications\Entities\Campaigns;
 use Dotsplatform\Notifications\NotificationsClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
@@ -143,8 +144,11 @@ class NotificationsHttpClient implements NotificationsClient
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),
             );
-        } catch (GuzzleException) {
+        } catch (GuzzleException $e) {
             $data = [];
+            Log::warning('getUserAppTokens error', [
+                'message' => $e->getMessage(),
+            ]);
         }
 
         return AppTokens::fromArray($data);
