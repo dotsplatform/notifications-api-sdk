@@ -51,8 +51,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
     private const SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE = '/api/app-tokens/users/%s';
     private const UPDATE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
-
-    private const SHOW_USER_APP_TOKENS_URL_TEMPLATE = '/api/accounts/%s/user/%s/app-tokens';
+    private const SHOW_USER_APP_TOKENS_URL_TEMPLATE = '/api/accounts/%s/users/%s/app-tokens';
 
     public function storeAppToken(AppTokenFormDTO $dto): AppToken
     {
@@ -141,6 +140,10 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::SHOW_USER_APP_TOKENS_URL_TEMPLATE, $accountId, $userId);
 
         try {
+            $response = $this->makeClient()->get($url);
+            Log::warning('response', [
+                'response' => $response,
+            ]);
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),
             );
