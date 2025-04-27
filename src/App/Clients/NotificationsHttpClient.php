@@ -137,6 +137,10 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function getUserAppTokens(string $accountId, string $userId): AppTokens
     {
+        Log::warning('userId', [
+            'accountId' => $accountId,
+            'userId' => $userId,
+        ]);
         $url = sprintf(self::SHOW_USER_APP_TOKENS_URL_TEMPLATE, $accountId, $userId);
 
         try {
@@ -197,7 +201,7 @@ class NotificationsHttpClient implements NotificationsClient
             Log::warning('json', [
                 $dto->getPushNotificationData()->toArray(),
                 'account' => $dto->getAccountId(),
-                'appToken' => $dto->getAppTokenId(),
+                'token' => $dto->getAppTokenId(),
                 'userId' => $dto->getUserId(),
             ]);
             $response = $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
