@@ -196,6 +196,7 @@ class NotificationsHttpClient implements NotificationsClient
         try {
             Log::warning('json', [
                 $dto->getPushNotificationData()->toArray(),
+                'url' => $url,
             ]);
             $response = $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
             Log::warning('response', [
