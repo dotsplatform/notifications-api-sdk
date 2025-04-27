@@ -140,18 +140,11 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::SHOW_USER_APP_TOKENS_URL_TEMPLATE, $accountId, $userId);
 
         try {
-            $response = $this->makeClient()->get($url);
-            Log::warning('response', [
-                'response' => $response->getBody(),
-            ]);
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),
             );
         } catch (GuzzleException $e) {
             $data = [];
-            Log::warning('getUserAppTokens error', [
-                'message' => $e->getMessage(),
-            ]);
         }
 
         return AppTokens::fromArray($data);
@@ -201,8 +194,14 @@ class NotificationsHttpClient implements NotificationsClient
             $dto->getUserId(),
         );
         try {
-            $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
-        } catch (GuzzleException) {
+            $response = $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
+            Log::warning('response', [
+                'response' => $response->getBody(),
+            ]);
+        } catch (GuzzleException $e) {
+            Log::warning('exception', [
+                'response' => $e->getMessage()
+            ]);
         }
     }
 
