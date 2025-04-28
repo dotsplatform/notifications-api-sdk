@@ -25,33 +25,32 @@ use Dotsplatform\Notifications\Entities\Campaigns;
 use Dotsplatform\Notifications\NotificationsClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
 class NotificationsHttpClient implements NotificationsClient
 {
-    private const FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
-    private const STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
-    private const ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
-    private const FIND_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
-    private const UPDATE_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
-    private const CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
-    private const UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
-    private const FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
-    private const SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
-    private const SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
-    private const SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
-    private const SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/push';
-    private const INDEX_APP_TOKEN_UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
-    private const INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
-    private const INDEX_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/push';
-    private const STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
-    private const SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
-    private const SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE = '/api/app-tokens/users/%s';
-    private const UPDATE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
-    private const SHOW_USER_APP_TOKENS_URL_TEMPLATE = '/api/accounts/%s/users/%s/app-tokens';
+    private const string FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
+    private const string STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
+    private const string ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
+    private const string FIND_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
+    private const string UPDATE_CAMPAIGN_STATISTICS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/statistics';
+    private const string CREATE_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
+    private const string UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
+    private const string FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
+    private const string SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
+    private const string SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
+    private const string SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
+    private const string SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/push';
+    private const string INDEX_APP_TOKEN_UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
+    private const string INDEX_APP_TOKEN_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push';
+    private const string INDEX_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/push';
+    private const string STORE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens';
+    private const string SHOW_APP_TOKEN_URL_TEMPLATE = '/api/app-tokens/%s';
+    private const string SHOW_USER_APP_TOKEN_BY_TYPES_URL_TEMPLATE = '/api/app-tokens/users/%s';
+    private const string UPDATE_APP_TOKEN_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s';
+    private const string SHOW_USER_APP_TOKENS_URL_TEMPLATE = '/api/accounts/%s/users/%s/app-tokens';
 
     public function storeAppToken(AppTokenFormDTO $dto): AppToken
     {
@@ -137,17 +136,13 @@ class NotificationsHttpClient implements NotificationsClient
 
     public function getUserAppTokens(string $accountId, string $userId): AppTokens
     {
-        Log::warning('userId', [
-            'accountId' => $accountId,
-            'userId' => $userId,
-        ]);
         $url = sprintf(self::SHOW_USER_APP_TOKENS_URL_TEMPLATE, $accountId, $userId);
 
         try {
             $data = $this->decodeResponse(
                 $this->makeClient()->get($url),
             );
-        } catch (GuzzleException $e) {
+        } catch (GuzzleException) {
             $data = [];
         }
 
@@ -198,20 +193,8 @@ class NotificationsHttpClient implements NotificationsClient
             $dto->getUserId(),
         );
         try {
-            Log::warning('json', [
-                $dto->getPushNotificationData()->toArray(),
-                'account' => $dto->getAccountId(),
-                'token' => $dto->getAppTokenId(),
-                'userId' => $dto->getUserId(),
-            ]);
-            $response = $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
-            Log::warning('response', [
-                'response' => $response->getBody(),
-            ]);
-        } catch (GuzzleException $e) {
-            Log::warning('exception', [
-                'response' => $e->getMessage()
-            ]);
+            $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
+        } catch (GuzzleException) {
         }
     }
 
