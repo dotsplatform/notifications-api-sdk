@@ -19,6 +19,7 @@ use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
+use Dotsplatform\Notifications\Entities\AppTokens;
 use Dotsplatform\Notifications\Entities\CampaignStatistics;
 use Dotsplatform\Notifications\Entities\NotificationsAccount;
 use Dotsplatform\Notifications\Entities\Campaign;
@@ -67,6 +68,11 @@ class SuccessNotificationsStubClient implements NotificationsClient
     public function storeAccount(NotificationsAccount $account): void
     {
         // TODO: Implement storeAccount() method.
+    }
+
+    public function getUserAppTokens(string $accountId, string $userId): AppTokens
+    {
+        return AppTokens::empty();
     }
 
     public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
