@@ -37,11 +37,11 @@ interface NotificationsClient
 
     public function storeAccount(NotificationsAccount $account): void;
 
-    public function getUserAppTokens(string $accountId, string $userId): AppTokens;
-
     public function sendUsersPushNotifications(string $account, SendUsersPushNotifications $list): void;
 
     public function sendUserCourierPushNotification(SendUserPushNotificationDTO $dto): void;
+
+    public function sendUserPushNotification(SendUserPushNotificationDTO $dto): void;
 
     public function sendAppTokenPushNotification(SendAppTokenPushNotificationDTO $dto): void;
 
