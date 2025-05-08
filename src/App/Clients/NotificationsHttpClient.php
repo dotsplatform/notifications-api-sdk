@@ -164,10 +164,7 @@ class NotificationsHttpClient implements NotificationsClient
             $dto->getUserId(),
         );
         try {
-            $this->makeClient()->post($url, ['json' => [
-                'methods' => $dto->getMethods(),
-                'pushNotificationData' => $dto->getPushNotificationData()->toArray(),
-            ]]);
+            $this->makeClient()->post($url, ['json' => $dto->toArray()]);
         } catch (GuzzleException) {
         }
     }

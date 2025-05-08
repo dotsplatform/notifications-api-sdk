@@ -16,18 +16,16 @@ class SendUserNotificationDTO extends DTO
 
     protected string $userId;
 
+    protected ?string $phone;
+
+    protected string $message;
+
+    protected ?string $title = null;
+
     protected array $methods = [
         Notification::TYPE_PUSH,
         Notification::TYPE_SMS,
     ];
-
-    protected PushNotificationDataDTO $pushNotificationData;
-
-    public static function fromArray(array $data): static
-    {
-        $data['pushNotificationData'] = PushNotificationDataDTO::fromArray($data['pushNotificationData'] ?? []);
-        return parent::fromArray($data);
-    }
 
     public function getAccountId(): string
     {
@@ -39,13 +37,23 @@ class SendUserNotificationDTO extends DTO
         return $this->userId;
     }
 
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
     public function getMethods(): array
     {
         return $this->methods;
-    }
-
-    public function getPushNotificationData(): PushNotificationDataDTO
-    {
-        return $this->pushNotificationData;
     }
 }
