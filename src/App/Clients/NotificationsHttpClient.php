@@ -14,6 +14,7 @@ use Dotsplatform\Notifications\DTO\PushNotificationsFiltersDTO;
 use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUserNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
@@ -40,7 +41,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const string FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const string SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
     private const string SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
-    private const string SEND_USER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/push';
+    private const string SEND_USER_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s';
     private const string SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
     private const string SEND_APP_TOKEN_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/push';
     private const string INDEX_APP_TOKEN_UNREAD_PUSH_NOTIFICATIONS_COUNT_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/push/unread/count';
@@ -155,15 +156,18 @@ class NotificationsHttpClient implements NotificationsClient
         }
     }
 
-    public function sendUserPushNotification(SendUserPushNotificationDTO $dto): void
+    public function sendUserNotification(SendUserNotificationDTO $dto): void
     {
         $url = sprintf(
-            self::SEND_USER_PUSH_NOTIFICATION_URL_TEMPLATE,
+            self::SEND_USER_NOTIFICATION_URL_TEMPLATE,
             $dto->getAccountId(),
             $dto->getUserId(),
         );
         try {
-            $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
+            $this->makeClient()->post($url, ['json' => [
+                'methods' => $dto->getMethods(),
+                'pushNotificationData' => $dto->getPushNotificationData()->toArray(),
+            ]]);
         } catch (GuzzleException) {
         }
     }

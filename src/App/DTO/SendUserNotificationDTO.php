@@ -1,0 +1,51 @@
+<?php
+/**
+ * Description of SendUserNotificationDTO.php
+ * @copyright Copyright (c) DOTSPLATFORM, LLC
+ * @author    Mamontov Bogdan <bohdan.mamontov@dotsplatform.com>
+ */
+
+namespace Dotsplatform\Notifications\DTO;
+
+use Dots\Data\DTO;
+use Dotsplatform\Notifications\Entities\Notification;
+
+class SendUserNotificationDTO extends DTO
+{
+    protected string $accountId;
+
+    protected string $userId;
+
+    protected array $methods = [
+        Notification::TYPE_PUSH,
+        Notification::TYPE_SMS,
+    ];
+
+    protected PushNotificationDataDTO $pushNotificationData;
+
+    public static function fromArray(array $data): static
+    {
+        $data['pushNotificationData'] = PushNotificationDataDTO::fromArray($data['pushNotificationData'] ?? []);
+        return parent::fromArray($data);
+    }
+
+    public function getAccountId(): string
+    {
+        return $this->accountId;
+    }
+
+    public function getUserId(): string
+    {
+        return $this->userId;
+    }
+
+    public function getMethods(): array
+    {
+        return $this->methods;
+    }
+
+    public function getPushNotificationData(): PushNotificationDataDTO
+    {
+        return $this->pushNotificationData;
+    }
+}
