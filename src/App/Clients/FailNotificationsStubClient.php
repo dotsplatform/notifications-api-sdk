@@ -53,12 +53,6 @@ class FailNotificationsStubClient implements NotificationsClient
         // TODO: Implement storeAccount() method.
     }
 
-    public function getUserAppTokens(string $accountId, string $userId): AppTokens
-    {
-        return AppTokens::empty();
-    }
-
-
     public function getAppTokenPushNotifications(PushNotificationsFiltersDTO $dto): PushNotificationsResponseList
     {
         return PushNotificationsResponseList::empty();
@@ -108,6 +102,11 @@ class FailNotificationsStubClient implements NotificationsClient
     public function sendUserCourierPushNotification(SendUserPushNotificationDTO $dto): void
     {
         // TODO: Implement sendUserCourierPush() method.
+    }
+
+    public function sendUserNotification(SendUserPushNotificationDTO $dto): void
+    {
+        // TODO: Implement sendUserPushNotification() method.
     }
 
     public function sendAppTokenUserPushNotification(SendAppTokenUserPushNotificationDTO $dto): void
