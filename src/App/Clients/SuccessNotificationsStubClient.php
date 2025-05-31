@@ -17,6 +17,7 @@ use Dotsplatform\Notifications\DTO\Response\PushNotificationsResponseList;
 use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUsersNotifications;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\AppTokens;
@@ -137,6 +138,11 @@ class SuccessNotificationsStubClient implements NotificationsClient
     public function sendUsersPushNotifications(string $account, SendUsersPushNotifications $list): void
     {
         // TODO: Implement sendUserPush() method.
+    }
+
+    public function sendUsersNotifications(string $account, SendUsersNotifications $list): void
+    {
+        // TODO: Implement sendUsersNotifications() method.
     }
 
     public function findUserAppTokenByTypes(string $userId, array $appTokenTypes): ?AppToken
