@@ -24,7 +24,7 @@ class SendUsersNotifications extends Collection
     public function toRequestData(): array
     {
        return $this->map(
-                fn(SendUserNotificationDTO $item) => $item->toRequestData()
+                fn(SendUserNotificationDTO $item) => $item->toArray(),
             )->toArray();
     }
 }
