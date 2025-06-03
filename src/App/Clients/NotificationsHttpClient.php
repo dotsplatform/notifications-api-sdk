@@ -16,6 +16,7 @@ use Dotsplatform\Notifications\DTO\SendAppTokenPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendAppTokenUserPushNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserNotificationDTO;
 use Dotsplatform\Notifications\DTO\SendUserPushNotificationDTO;
+use Dotsplatform\Notifications\DTO\SendUsersNotifications;
 use Dotsplatform\Notifications\DTO\SendUsersPushNotifications;
 use Dotsplatform\Notifications\Entities\AppToken;
 use Dotsplatform\Notifications\Entities\CampaignStatistics;
@@ -40,6 +41,7 @@ class NotificationsHttpClient implements NotificationsClient
     private const string UPDATE_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const string FIND_NOTIFICATIONS_CAMPAIGN_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s';
     private const string SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users/push';
+    private const string SEND_USERS_NOTIFICATIONS_URL_TEMPLATE = '/api/accounts/%s/notifications/users';
     private const string SEND_USER_COURIER_PUSH_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s/couriers/push';
     private const string SEND_USER_NOTIFICATION_URL_TEMPLATE = '/api/accounts/%s/notifications/users/%s';
     private const string SEND_APP_TOKEN_USER_PUSH_NOTIFICATION_ULR_TEMPLATE = '/api/accounts/%s/notifications/app-tokens/%s/users/%s/push';
@@ -137,6 +139,15 @@ class NotificationsHttpClient implements NotificationsClient
     public function sendUsersPushNotifications(string $account, SendUsersPushNotifications $list): void
     {
         $url = sprintf(self::SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE, $account);
+        try {
+            $this->makeClient()->post($url, ['json' => ['items' => $list->toRequestData()]]);
+        } catch (GuzzleException) {
+        }
+    }
+
+    public function sendUsersNotifications(string $account, SendUsersNotifications $list): void
+    {
+        $url = sprintf(self::SEND_USERS_NOTIFICATIONS_URL_TEMPLATE, $account);
         try {
             $this->makeClient()->post($url, ['json' => ['items' => $list->toRequestData()]]);
         } catch (GuzzleException) {
