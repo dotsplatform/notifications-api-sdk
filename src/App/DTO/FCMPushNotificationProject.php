@@ -14,4 +14,5 @@ abstract class FCMPushNotificationProject
     public const PROJECT_1 = 'connection1'; // misteram
     public const PROJECT_2 = 'connection2'; // dotsplatform
     public const PROJECT_3 = 'connection3'; // dotsplatform-2
+    public const PROJECT_4 = 'connection4'; // dots-public-apps
 }
