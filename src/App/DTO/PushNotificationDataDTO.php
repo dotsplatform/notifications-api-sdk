@@ -40,11 +40,14 @@ class PushNotificationDataDTO extends DTO
     protected ?string $image = null;
     protected ?string $channel = null;
     protected NotificationsLinkDTO $linkData;
-    protected ?array $liveActivity = null;
+    protected ?LiveActivityPushDataDTO $liveActivity = null;
 
     public static function fromArray(array $data): static
     {
         $data['linkData'] = NotificationsLinkDTO::fromArray($data['linkData'] ?? []);
+        if (isset($data['liveActivity']) && is_array($data['liveActivity'])) {
+            $data['liveActivity'] = LiveActivityPushDataDTO::fromArray($data['liveActivity']);
+        }
         return parent::fromArray($data);
     }
 
@@ -98,7 +101,7 @@ class PushNotificationDataDTO extends DTO
         return $this->orderId;
     }
 
-    public function getLiveActivity(): ?array
+    public function getLiveActivity(): ?LiveActivityPushDataDTO
     {
         return $this->liveActivity;
     }
