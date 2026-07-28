@@ -36,6 +36,7 @@ class Campaign extends Entity
     protected int $recipientType;
     protected string $title;
     protected string $description;
+    protected array $translations = [];
     protected ?int $sendingTime;
     protected int $recipientsLevel;
     protected ?string $image;
@@ -145,6 +146,21 @@ class Campaign extends Entity
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
+
+    public function getTranslationTitle(string $lang): ?string
+    {
+        return $this->translations[$lang]['title'] ?? null;
+    }
+
+    public function getTranslationDescription(string $lang): ?string
+    {
+        return $this->translations[$lang]['description'] ?? null;
     }
 
     public function getSendingTime(): ?int
