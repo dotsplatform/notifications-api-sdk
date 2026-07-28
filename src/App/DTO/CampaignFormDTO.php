@@ -19,6 +19,7 @@ class CampaignFormDTO extends DTO
     protected int $recipientType;
     protected string $title;
     protected string $description;
+    protected array $translations = [];
     protected ?int $sendingTime;
     protected int $recipientsLevel;
     protected ?string $image;
@@ -63,6 +64,11 @@ class CampaignFormDTO extends DTO
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getTranslations(): array
+    {
+        return $this->translations;
     }
 
     public function getSendingTime(): ?int
