@@ -32,6 +32,8 @@ use RuntimeException;
 
 class NotificationsHttpClient implements NotificationsClient
 {
+    private const INTERNAL_GATEWAY_TOKEN_HEADER = 'X-Internal-Gateway-Token';
+
     private const string FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
     private const string STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
     private const string ACCOUNT_NOTIFICATIONS_CAMPAIGNS_URL_TEMPLATE = '/api/accounts/%s/campaigns';
@@ -353,6 +355,7 @@ class NotificationsHttpClient implements NotificationsClient
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
+                    self::INTERNAL_GATEWAY_TOKEN_HEADER => (string) config('notifications-api-sdk.notifications-server.token'),
                 ],
             ]
         );
