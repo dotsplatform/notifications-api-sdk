@@ -347,6 +347,16 @@ class NotificationsHttpClient implements NotificationsClient
         $this->makeClient()->put($url);
     }
 
+    private function getInternalGatewayToken(): string
+    {
+        $token = config('notifications-api-sdk.notifications-server.token');
+        if (!is_string($token)) {
+            return '';
+        }
+
+        return $token;
+    }
+
     protected function makeClient(): GuzzleClient
     {
         return new GuzzleClient(
@@ -355,7 +365,7 @@ class NotificationsHttpClient implements NotificationsClient
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
-                    self::INTERNAL_GATEWAY_TOKEN_HEADER => (string) config('notifications-api-sdk.notifications-server.token'),
+                    self::INTERNAL_GATEWAY_TOKEN_HEADER => $this->getInternalGatewayToken(),
                 ],
             ]
         );
