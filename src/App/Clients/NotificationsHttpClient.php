@@ -26,6 +26,8 @@ use Dotsplatform\Notifications\Entities\Campaigns;
 use Dotsplatform\Notifications\NotificationsClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
@@ -33,6 +35,9 @@ use RuntimeException;
 class NotificationsHttpClient implements NotificationsClient
 {
     private const INTERNAL_GATEWAY_TOKEN_HEADER = 'X-Internal-Gateway-Token';
+
+    private const string REQUEST_FAILURE_LOG_MESSAGE = 'Notifications API request failed';
+    private const int LOGGED_RESPONSE_BODY_MAX_LENGTH = 2000;
 
     private const string FIND_ACCOUNT_URL_TEMPLATE = '/api/accounts/%s';
     private const string STORE_ACCOUNT_URL_TEMPLATE = '/api/accounts';
@@ -75,7 +80,8 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::UPDATE_APP_TOKEN_URL_TEMPLATE, $dto->getAccountId(), $id);
         try {
             $this->makeClient()->put($url, ['json' => $dto->toArray()]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -134,7 +140,8 @@ class NotificationsHttpClient implements NotificationsClient
     {
         try {
             $this->makeClient()->post(self::STORE_ACCOUNT_URL_TEMPLATE, ['json' => $account->toArray()]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure(self::STORE_ACCOUNT_URL_TEMPLATE, $exception);
         }
     }
 
@@ -143,7 +150,8 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::SEND_USERS_PUSH_NOTIFICATIONS_URL_TEMPLATE, $account);
         try {
             $this->makeClient()->post($url, ['json' => ['items' => $list->toRequestData()]]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -152,7 +160,8 @@ class NotificationsHttpClient implements NotificationsClient
         $url = sprintf(self::SEND_USERS_NOTIFICATIONS_URL_TEMPLATE, $account);
         try {
             $this->makeClient()->post($url, ['json' => ['items' => $list->toRequestData()]]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -165,7 +174,8 @@ class NotificationsHttpClient implements NotificationsClient
         );
         try {
             $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -178,7 +188,8 @@ class NotificationsHttpClient implements NotificationsClient
         );
         try {
             $this->makeClient()->post($url, ['json' => $dto->toArray()]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -191,7 +202,8 @@ class NotificationsHttpClient implements NotificationsClient
         );
         try {
             $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -205,7 +217,8 @@ class NotificationsHttpClient implements NotificationsClient
         );
         try {
             $this->makeClient()->post($url, ['json' => $dto->getPushNotificationData()->toArray()]);
-        } catch (GuzzleException) {
+        } catch (GuzzleException $exception) {
+            $this->logRequestFailure($url, $exception);
         }
     }
 
@@ -369,6 +382,46 @@ class NotificationsHttpClient implements NotificationsClient
                 ],
             ]
         );
+    }
+
+    private function logRequestFailure(string $url, GuzzleException $exception): void
+    {
+        Log::error(self::REQUEST_FAILURE_LOG_MESSAGE, [
+            'url' => $url,
+            'status' => $this->resolveResponseStatus($exception),
+            'response' => $this->resolveResponseBody($exception),
+            'message' => $exception->getMessage(),
+        ]);
+    }
+
+    private function resolveResponseStatus(GuzzleException $exception): ?int
+    {
+        if (!$exception instanceof RequestException) {
+            return null;
+        }
+
+        $response = $exception->getResponse();
+        if ($response === null) {
+            return null;
+        }
+
+        return $response->getStatusCode();
+    }
+
+    private function resolveResponseBody(GuzzleException $exception): ?string
+    {
+        if (!$exception instanceof RequestException) {
+            return null;
+        }
+
+        $response = $exception->getResponse();
+        if ($response === null) {
+            return null;
+        }
+
+        $responseBody = (string)$response->getBody();
+
+        return mb_substr($responseBody, 0, self::LOGGED_RESPONSE_BODY_MAX_LENGTH);
     }
 
     private function decodeResponse(ResponseInterface $response): array
