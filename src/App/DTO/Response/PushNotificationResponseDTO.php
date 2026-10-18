@@ -21,6 +21,7 @@ class PushNotificationResponseDTO extends DTO
     protected bool $read;
     protected ?array $pushNotificationActionData;
     protected array $linkData;
+    protected ?string $promoCode = null;
 
     public function getId(): string
     {
@@ -55,6 +56,11 @@ class PushNotificationResponseDTO extends DTO
     public function getLinkData(): array
     {
         return $this->linkData;
+    }
+
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
     }
 
     public function isRead(): bool

@@ -40,6 +40,7 @@ class NotificationDataDTO extends DTO
     protected ?string $image = null;
     protected ?string $channel = null;
     protected NotificationsLinkDTO $linkData;
+    protected ?string $promoCode = null;
 
     public static function fromArray(array $data): static
     {
@@ -90,6 +91,11 @@ class NotificationDataDTO extends DTO
     public function getLinkData(): NotificationsLinkDTO
     {
         return $this->linkData;
+    }
+
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
     }
 
     public function getOrderId(): ?string

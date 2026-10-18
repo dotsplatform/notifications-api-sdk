@@ -41,6 +41,7 @@ class Campaign extends Entity
     protected int $recipientsLevel;
     protected ?string $image;
     protected NotificationsLinkDTO $linkData;
+    protected ?string $promoCode = null;
 
     public static function fromArray(array $data): static
     {
@@ -181,6 +182,11 @@ class Campaign extends Entity
     public function getLinkData(): NotificationsLinkDTO
     {
         return $this->linkData;
+    }
+
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
     }
 
     public function getUserGroupId(): ?string

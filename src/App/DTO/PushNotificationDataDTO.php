@@ -41,6 +41,7 @@ class PushNotificationDataDTO extends DTO
     protected ?string $channel = null;
     protected NotificationsLinkDTO $linkData;
     protected ?LiveActivityPushDataDTO $liveActivity = null;
+    protected ?string $promoCode = null;
 
     public static function fromArray(array $data): static
     {
@@ -94,6 +95,11 @@ class PushNotificationDataDTO extends DTO
     public function getLinkData(): NotificationsLinkDTO
     {
         return $this->linkData;
+    }
+
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
     }
 
     public function getOrderId(): ?string
