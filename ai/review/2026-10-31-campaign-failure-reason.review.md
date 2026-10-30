@@ -7,7 +7,7 @@
   The value comes from the `failureReason` key of the campaign API response; when the key is
   absent (older notifications service, or a campaign that did not fail) it stays `null`.
 - New `CampaignFailureReason` class with the 3 known codes
-  (`marketing_exclude_list_unavailable`, `marketing_exclude_list_expired`, `send_failed`),
+  (`marketing_exclude_list_unavailable`, `marketing_exclude_list_expired`, `send_failed`, `account_not_found`, `invalid_settings`),
   `all()` and `isKnown()`. Plain string constants, not an enum, so an unknown code from a newer
   service never breaks mapping — callers should show a generic text for unknown codes.
 

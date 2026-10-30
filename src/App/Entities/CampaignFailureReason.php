@@ -17,6 +17,8 @@ class CampaignFailureReason
     public const MARKETING_EXCLUDE_LIST_UNAVAILABLE = 'marketing_exclude_list_unavailable';
     public const MARKETING_EXCLUDE_LIST_EXPIRED = 'marketing_exclude_list_expired';
     public const SEND_FAILED = 'send_failed';
+    public const ACCOUNT_NOT_FOUND = 'account_not_found';
+    public const INVALID_SETTINGS = 'invalid_settings';
 
     /**
      * @return string[]
@@ -27,6 +29,8 @@ class CampaignFailureReason
             self::MARKETING_EXCLUDE_LIST_UNAVAILABLE,
             self::MARKETING_EXCLUDE_LIST_EXPIRED,
             self::SEND_FAILED,
+            self::ACCOUNT_NOT_FOUND,
+            self::INVALID_SETTINGS,
         ];
     }
 
