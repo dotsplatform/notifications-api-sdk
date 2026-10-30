@@ -18,6 +18,7 @@ class Campaign extends Entity
     public const STATUS_PROCESSING = 20;
     public const STATUS_FINISHED = 30;
     public const STATUS_DECLINED = 40;
+    public const STATUS_FAILED = 50;
 
     public const RECIPIENT_TYPE_ALL = 1;
     public const RECIPIENT_TYPE_IOS = 2;
@@ -41,6 +42,12 @@ class Campaign extends Entity
     protected int $recipientsLevel;
     protected ?string $image;
     protected NotificationsLinkDTO $linkData;
+
+    /**
+     * Set by the notifications service only for failed campaigns,
+     * see CampaignFailureReason for the possible codes.
+     */
+    protected ?string $failureReason = null;
 
     public static function fromArray(array $data): static
     {
@@ -71,6 +78,11 @@ class Campaign extends Entity
     public function isDeclined(): bool
     {
         return $this->getStatus() == self::STATUS_DECLINED;
+    }
+
+    public function isFailed(): bool
+    {
+        return $this->getStatus() == self::STATUS_FAILED;
     }
 
     public function isPush(): bool
@@ -186,5 +198,10 @@ class Campaign extends Entity
     public function getUserGroupId(): ?string
     {
         return $this->userGroupId;
+    }
+
+    public function getFailureReason(): ?string
+    {
+        return $this->failureReason;
     }
 }
