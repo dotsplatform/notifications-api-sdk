@@ -22,6 +22,9 @@ class SendUserNotificationDTO extends DTO
 
     protected ?string $title = null;
 
+    /** The caller's bulk send reference (for example a CRM broadcast token); push opens are counted by it. */
+    protected ?string $externalReference = null;
+
     protected array $methods = [
         Notification::TYPE_PUSH,
         Notification::TYPE_SMS,
@@ -50,6 +53,11 @@ class SendUserNotificationDTO extends DTO
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+    public function getExternalReference(): ?string
+    {
+        return $this->externalReference;
     }
 
     public function getMethods(): array
