@@ -12,6 +12,7 @@ use Dotsplatform\Notifications\DTO\Response\PushOpens\CampaignPushOpensDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\CampaignRecipientsPage;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\ExternalReferencePushOpensDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\ExternalReferencePushOpensList;
+use Dotsplatform\Notifications\DTO\Response\PushOpens\NotificationDeliveryDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\NotificationOpenDTO;
 use Dotsplatform\Notifications\PushOpensClient;
 
@@ -29,6 +30,17 @@ class SuccessPushOpensStubClient implements PushOpensClient
         return NotificationOpenDTO::fromArray([
             'id' => $notificationId,
             'openedAt' => time(),
+        ]);
+    }
+
+    public function markNotificationDelivered(
+        string $accountId,
+        string $appTokenId,
+        string $notificationId,
+    ): ?NotificationDeliveryDTO {
+        return NotificationDeliveryDTO::fromArray([
+            'id' => $notificationId,
+            'deliveredAt' => time(),
         ]);
     }
 

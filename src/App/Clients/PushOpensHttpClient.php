@@ -11,6 +11,7 @@ use Dotsplatform\Notifications\DTO\Request\CampaignRecipientsRequestDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\CampaignPushOpensDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\CampaignRecipientsPage;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\ExternalReferencePushOpensList;
+use Dotsplatform\Notifications\DTO\Response\PushOpens\NotificationDeliveryDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\NotificationOpenDTO;
 use Dotsplatform\Notifications\Exceptions\NotificationsRequestException;
 use Dotsplatform\Notifications\PushOpensClient;
@@ -25,6 +26,7 @@ class PushOpensHttpClient implements PushOpensClient
     private const string INTERNAL_GATEWAY_TOKEN_HEADER = 'X-Internal-Gateway-Token';
 
     private const string MARK_NOTIFICATION_OPENED_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/%s/opened';
+    private const string MARK_NOTIFICATION_DELIVERED_URL_TEMPLATE = '/api/accounts/%s/app-tokens/%s/notifications/%s/delivered';
     private const string CAMPAIGN_RECIPIENTS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/recipients';
     private const string CAMPAIGN_PUSH_OPENS_URL_TEMPLATE = '/api/accounts/%s/campaigns/%s/opens';
     private const string EXTERNAL_REFERENCES_PUSH_OPENS_URL_TEMPLATE = '/api/accounts/%s/notifications/push/opens';
@@ -46,6 +48,20 @@ class PushOpensHttpClient implements PushOpensClient
         }
 
         return NotificationOpenDTO::fromArray($this->decodeSuccessfulResponse($url, $response));
+    }
+
+    public function markNotificationDelivered(
+        string $accountId,
+        string $appTokenId,
+        string $notificationId,
+    ): ?NotificationDeliveryDTO {
+        $url = sprintf(self::MARK_NOTIFICATION_DELIVERED_URL_TEMPLATE, $accountId, $appTokenId, $notificationId);
+        $response = $this->send('POST', $url, []);
+        if ($this->isNotFound($response)) {
+            return null;
+        }
+
+        return NotificationDeliveryDTO::fromArray($this->decodeSuccessfulResponse($url, $response));
     }
 
     public function getCampaignRecipients(CampaignRecipientsRequestDTO $dto): ?CampaignRecipientsPage

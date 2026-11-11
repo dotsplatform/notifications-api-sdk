@@ -11,6 +11,7 @@ use Dotsplatform\Notifications\DTO\Request\CampaignRecipientsRequestDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\CampaignPushOpensDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\CampaignRecipientsPage;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\ExternalReferencePushOpensList;
+use Dotsplatform\Notifications\DTO\Response\PushOpens\NotificationDeliveryDTO;
 use Dotsplatform\Notifications\DTO\Response\PushOpens\NotificationOpenDTO;
 use Dotsplatform\Notifications\Exceptions\NotificationsRequestException;
 
@@ -35,6 +36,18 @@ interface PushOpensClient
         string $appTokenId,
         string $notificationId,
     ): ?NotificationOpenDTO;
+
+    /**
+     * The push reached this device (reported by the app when it arrives). Only the first report is stored.
+     *
+     * @return NotificationDeliveryDTO|null null when the notification is not a push of this app token in this account
+     * @throws NotificationsRequestException
+     */
+    public function markNotificationDelivered(
+        string $accountId,
+        string $appTokenId,
+        string $notificationId,
+    ): ?NotificationDeliveryDTO;
 
     /**
      * One page of the campaign's sent pushes, ordered by notification id.
