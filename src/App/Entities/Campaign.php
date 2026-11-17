@@ -175,6 +175,11 @@ class Campaign extends Entity
         return $this->translations[$lang]['description'] ?? null;
     }
 
+    public function getTranslationImage(string $lang): ?string
+    {
+        return $this->translations[$lang]['image'] ?? null;
+    }
+
     public function getSendingTime(): ?int
     {
         return $this->sendingTime;
