@@ -42,6 +42,7 @@ class Campaign extends Entity
     protected int $recipientsLevel;
     protected ?string $image;
     protected NotificationsLinkDTO $linkData;
+    protected ?string $promoCode = null;
 
     /**
      * Set by the notifications service only for failed campaigns,
@@ -198,6 +199,11 @@ class Campaign extends Entity
     public function getLinkData(): NotificationsLinkDTO
     {
         return $this->linkData;
+    }
+
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
     }
 
     public function getUserGroupId(): ?string

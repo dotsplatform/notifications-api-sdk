@@ -41,6 +41,7 @@ class PushNotificationDataDTO extends DTO
     protected ?string $channel = null;
     protected NotificationsLinkDTO $linkData;
     protected ?LiveActivityPushDataDTO $liveActivity = null;
+    protected ?string $promoCode = null;
     /** The caller's send reference (for example a CRM message token); push opens are counted by it. Max 64 chars. */
     protected ?string $externalReference = null;
 
@@ -96,6 +97,11 @@ class PushNotificationDataDTO extends DTO
     public function getLinkData(): NotificationsLinkDTO
     {
         return $this->linkData;
+    }
+
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
     }
 
     public function getOrderId(): ?string
